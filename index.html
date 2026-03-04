@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>アークナイツ考察 — SEKAI LOG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=DM+Mono:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink:#12172a; --p1:#1c2340; --p2:#222b4a; --p3:#283256;
+:root{
+  --ink:#12172a; --p2:#222b4a; --p3:#283256;
   --ln:#2e3d62; --ln2:#3a4e7a;
   --gold:#d4a030; --golh:#f0b840; --gldim:rgba(212,160,48,.14);
-  --ice:#7dd8f8; --icedim:rgba(125,216,248,.12);
+  --ice:#7dd8f8;
   --red:#f06060; --grn:#5dcf7e;
   --tx:#dde8ff; --tx2:#8fa8d4; --tx3:#4e6494;
+  --crimson:#c0392b; --crimson-hi:#e74c3c; --crimson-dim:rgba(192,57,43,.12);
   --sf:'Shippori Mincho B1',serif;
   --ss:'Zen Kaku Gothic New',sans-serif;
   --mo:'DM Mono',monospace;
@@ -30,14 +31,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── HEADER ── */
 .hdr{background:linear-gradient(135deg,#161d38,#1e2748);border-bottom:1px solid var(--ln2);
   position:sticky;top:0;z-index:400;box-shadow:0 2px 24px rgba(0,0,0,.5)}
-.hdr-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px;height:54px}
-.logo{display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;text-decoration:none}
-.logo-mark{font-family:var(--mo);font-size:13px;font-weight:500;color:var(--golh);letter-spacing:.06em;
-  border:1px solid var(--gold);padding:3px 8px;white-space:nowrap}
+.hdr-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:54px}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-mark{font-family:var(--mo);font-size:13px;color:var(--golh);border:1px solid var(--gold);padding:3px 8px;white-space:nowrap}
 .logo-sep{width:1px;height:22px;background:var(--ln2)}
 .logo-t{font-family:var(--sf);font-size:16px;font-weight:700;color:#fff;letter-spacing:.08em}
-.logo-s{font-size:9px;color:var(--tx3);font-family:var(--mo);letter-spacing:.2em;margin-top:1px}
+.logo-s{font-size:9px;color:var(--tx3);font-family:var(--mo);letter-spacing:.2em}
 .hdr-r{display:flex;align-items:center;gap:8px}
 .dot{width:5px;height:5px;background:var(--grn);border-radius:50%;animation:bl 1.8s step-end infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
@@ -45,7 +44,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ── NAV ── */
 .nav-w{background:var(--p2);border-bottom:1px solid var(--ln);position:sticky;top:54px;z-index:390;overflow-x:auto}
-.nav{max-width:1060px;margin:0 auto;padding:0 22px;display:flex;gap:0;white-space:nowrap}
+.nav{max-width:1060px;margin:0 auto;padding:0 22px;display:flex;white-space:nowrap}
 .nb{background:none;border:none;color:var(--tx3);font-family:var(--ss);font-size:12px;font-weight:700;
   letter-spacing:.1em;padding:13px 18px;cursor:pointer;position:relative;transition:color .18s}
 .nb::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;
@@ -53,12 +52,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .nb:hover{color:var(--tx)}
 .nb.on{color:var(--golh)}
 .nb.on::after{transform:scaleX(1)}
-.nb-badge{display:inline-block;background:var(--gold);color:#000;font-size:8px;font-weight:900;
-  padding:1px 5px;border-radius:2px;margin-left:5px;vertical-align:middle}
+.nb-badge{display:inline-block;background:var(--gold);color:#000;font-size:8px;font-weight:900;padding:1px 5px;border-radius:2px;margin-left:5px;vertical-align:middle}
 
-/* ── PAGE CONTAINER ── */
+/* ── PAGE ── */
 .pg{max-width:1060px;margin:0 auto;padding:32px 22px;display:none}
 .pg.on{display:block;animation:fu .28s ease both}
+#pg-kousatsu{max-width:none;padding:0}
+#pg-kousatsu.on{display:block}
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SECTION LABEL ── */
@@ -75,8 +75,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .home-parent{margin-top:16px;font-family:var(--mo);font-size:10px;color:var(--tx3);letter-spacing:.15em}
 .home-parent a{color:var(--ice);text-decoration:none}
 .hgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:40px}
-.hg{background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:20px 18px;
-  cursor:pointer;transition:border-color .2s,transform .15s}
+.hg{background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:20px 18px;cursor:pointer;transition:border-color .2s,transform .15s}
 .hg:hover{border-color:var(--gold);transform:translateY(-3px)}
 .hg.ft{border-color:var(--gold);background:var(--gldim)}
 .hg-icon{font-size:22px;margin-bottom:10px}
@@ -91,131 +90,130 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .log-date{font-family:var(--mo);font-size:10px;color:var(--tx3);white-space:nowrap}
 .log-text{font-size:12px;color:var(--tx2)}
 
-/* ── 考察 ── */
-.k-intro{border-left:3px solid var(--gold);padding:14px 0 14px 20px;margin-bottom:28px;
-  font-size:12px;color:var(--tx2);line-height:1.8}
-.k-intro strong{color:var(--tx);font-family:var(--sf)}
-.art-list{display:flex;flex-direction:column;gap:6px}
-.art-card{background:var(--p3);border:1px solid var(--ln);border-radius:2px;
-  cursor:pointer;transition:border-color .18s;overflow:hidden}
-.art-card:hover{border-color:rgba(212,160,48,.5)}
-.art-card-in{padding:20px 22px}
-.art-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.art-title{font-family:var(--sf);font-size:16px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:10px;letter-spacing:.03em}
-.art-exc{font-size:12px;color:var(--tx2);line-height:1.8}
-.art-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}
-.art-tag{font-family:var(--mo);font-size:9px;color:var(--tx3);border:1px solid var(--ln);padding:2px 7px;border-radius:2px}
-/* article detail */
-#art-detail{display:none}
-#art-detail.on{display:block}
-.art-back{background:none;border:none;color:var(--tx2);font-family:var(--mo);font-size:11px;
-  letter-spacing:.12em;cursor:pointer;padding:0;margin-bottom:28px;transition:color .15s}
-.art-back:hover{color:var(--golh)}
-.art-ey{font-family:var(--mo);font-size:10px;color:var(--gold);letter-spacing:.25em;margin-bottom:12px}
-.art-dtitle{font-family:var(--sf);font-size:22px;font-weight:900;color:#fff;line-height:1.5;letter-spacing:.04em;margin-bottom:16px}
-.art-dmeta{display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--ln);flex-wrap:wrap}
-.art-body{font-family:var(--sf);font-size:15px;color:var(--tx);line-height:2.0;letter-spacing:.04em;max-width:720px}
-.art-body p{margin-bottom:1.8em}
-.art-author{margin-top:36px;padding-top:20px;border-top:1px solid var(--ln);display:flex;align-items:center;gap:14px;max-width:720px}
-.art-author-ico{width:40px;height:40px;background:var(--gldim);border:1px solid var(--gold);border-radius:2px;
-  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.art-author-name{font-family:var(--sf);font-size:13px;font-weight:700;color:var(--tx)}
-.art-author-link{font-family:var(--mo);font-size:10px;color:var(--ice)}
+/* ── 考察 — sekai-log style ── */
+.k-hero{position:relative;overflow:hidden;padding:52px 32px 44px;background:#0a0a0f;border-bottom:1px solid #1e1e2a}
+.k-hero::before{content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(192,57,43,.06) 38px,rgba(192,57,43,.06) 39px),
+    repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(192,57,43,.04) 38px,rgba(192,57,43,.04) 39px)}
+.k-hero-in{position:relative;max-width:1060px;margin:0 auto}
+.k-hero-cat{font-family:var(--mo);font-size:11px;letter-spacing:.3em;color:var(--crimson-hi);margin-bottom:14px}
+.k-hero-cat::before{content:'';display:inline-block;width:28px;height:1px;background:var(--crimson-hi);vertical-align:middle;margin-right:10px}
+.k-hero-title{font-family:var(--sf);font-size:42px;font-weight:800;color:#fff;line-height:1.25;letter-spacing:.04em;margin-bottom:16px}
+.k-hero-title em{color:var(--crimson-hi);font-style:normal}
+.k-hero-desc{font-size:13px;color:#888;line-height:1.9;max-width:520px}
 
-/* ── TAG PILLS ── */
+.k-filter{background:#0e0e16;border-bottom:1px solid #1a1a28;padding:14px 32px;position:sticky;top:101px;z-index:300}
+.k-filter-in{max-width:1060px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.kftb{background:none;border:1px solid #2a2a3a;color:#666;font-family:var(--ss);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 18px;cursor:pointer;transition:all .15s}
+.kftb:hover{border-color:var(--crimson);color:#ccc}
+.kftb.on{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.k-count{margin-left:auto;font-family:var(--mo);font-size:10px;color:#444;letter-spacing:.1em}
+
+.k-grid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111118;border-top:1px solid #1a1a28}
+.art-card{background:#0d0d14;cursor:pointer;transition:background .15s;display:flex;flex-direction:column}
+.art-card:hover{background:#13131e}
+.art-card-in{padding:24px 22px;flex:1;display:flex;flex-direction:column}
+.art-cat-label{font-family:var(--mo);font-size:10px;letter-spacing:.18em;color:var(--crimson-hi);margin-bottom:14px}
+.art-title{font-family:var(--sf);font-size:17px;font-weight:700;color:#e8e8ee;line-height:1.55;margin-bottom:14px;letter-spacing:.03em;flex:1}
+.art-card:hover .art-title{color:#fff}
+.art-exc{font-size:12px;color:#555;line-height:1.85;margin-bottom:16px}
+.art-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto}
+.art-tag{font-family:var(--mo);font-size:9px;color:#444;border:1px solid #222230;padding:2px 7px}
+
+/* 記事詳細 */
+#art-detail{display:none;background:#080810;min-height:100vh}
+#art-detail.on{display:block}
+.art-detail-hero{background:#0a0a0f;border-bottom:1px solid #1a1a28;padding:48px 32px 40px}
+.art-detail-hero-in{max-width:780px;margin:0 auto}
+.art-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:#555;font-family:var(--mo);font-size:11px;letter-spacing:.12em;cursor:pointer;padding:0;margin-bottom:32px;transition:color .15s}
+.art-back:hover{color:var(--crimson-hi)}
+.art-back::before{content:'←';color:var(--crimson);margin-right:4px}
+.art-ey{font-family:var(--mo);font-size:10px;color:var(--crimson-hi);letter-spacing:.28em;margin-bottom:16px}
+.art-dtitle{font-family:var(--sf);font-size:28px;font-weight:800;color:#fff;line-height:1.45;letter-spacing:.04em;margin-bottom:24px}
+.art-dmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:20px;border-top:1px solid #1a1a28}
+.art-dmeta-date{font-family:var(--mo);font-size:10px;color:#444;letter-spacing:.1em}
+.art-body-wrap{max-width:780px;margin:0 auto;padding:48px 32px}
+.art-body{font-family:var(--sf);font-size:16px;color:#c8c8d8;line-height:2.1;letter-spacing:.04em}
+.art-body p{margin-bottom:2em}
+.art-body p:first-child::first-letter{font-size:3em;font-weight:800;color:var(--crimson-hi);float:left;line-height:.85;margin:4px 8px 0 0}
+.art-author{max-width:780px;margin:0 auto;padding:32px 32px 48px;border-top:1px solid #1a1a28;display:flex;align-items:center;gap:16px}
+.art-author-ico{width:44px;height:44px;background:var(--crimson-dim);border:1px solid var(--crimson);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.art-author-name{font-family:var(--sf);font-size:13px;font-weight:700;color:#ccc}
+.art-author-link{font-family:var(--mo);font-size:10px;color:#555;text-decoration:none;letter-spacing:.1em}
+.art-author-link:hover{color:var(--crimson-hi)}
+.k-pill{font-family:var(--mo);font-size:9px;letter-spacing:.08em;padding:3px 9px;border:1px solid}
+.k-pill-w{color:var(--crimson-hi);border-color:rgba(192,57,43,.4);background:var(--crimson-dim)}
+.k-pill-c{color:#7dd8f8;border-color:rgba(125,216,248,.25);background:rgba(125,216,248,.08)}
+
+/* ── FILTERS / TAGS ── */
 .tag{font-family:var(--mo);font-size:9px;padding:2px 7px;border-radius:2px;letter-spacing:.06em;font-weight:700}
 .tg{background:var(--gldim);color:var(--golh);border:1px solid rgba(212,160,48,.3)}
-.tb{background:var(--icedim);color:var(--ice);border:1px solid rgba(125,216,248,.25)}
+.tb{background:rgba(125,216,248,.1);color:var(--ice);border:1px solid rgba(125,216,248,.25)}
 .tr{background:rgba(240,96,96,.1);color:var(--red);border:1px solid rgba(240,96,96,.25)}
 .tf{background:rgba(40,50,86,.4);color:var(--tx2);border:1px solid var(--ln)}
-
-/* ── FILTERS ── */
 .ftabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.ftb{padding:5px 11px;border:1px solid var(--ln);background:var(--p3);color:var(--tx3);
-  font-size:11px;font-family:var(--ss);font-weight:700;cursor:pointer;border-radius:2px;transition:all .15s}
+.ftb{padding:5px 11px;border:1px solid var(--ln);background:var(--p3);color:var(--tx3);font-size:11px;font-family:var(--ss);font-weight:700;cursor:pointer;border-radius:2px;transition:all .15s}
 .ftb:hover{border-color:var(--gold);color:var(--tx)}
 .ftb.on{background:var(--gldim);border-color:var(--gold);color:var(--golh)}
-.srch{width:100%;background:var(--p3);border:1px solid var(--ln);border-radius:2px;
-  padding:9px 14px;color:var(--tx);font-family:var(--ss);font-size:13px;outline:none;
-  transition:border-color .18s;margin-bottom:12px}
+.srch{width:100%;background:var(--p3);border:1px solid var(--ln);border-radius:2px;padding:9px 14px;color:var(--tx);font-family:var(--ss);font-size:13px;outline:none;transition:border-color .18s;margin-bottom:12px}
 .srch::placeholder{color:var(--tx3)}
 .srch:focus{border-color:rgba(212,160,48,.5)}
 .op-count{font-family:var(--mo);font-size:10px;color:var(--tx3);margin-bottom:14px}
 
-/* ── OPERATOR GRID ── */
+/* ── OPERATORS ── */
 .op-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:7px}
-.opc{background:var(--p2);border:1px solid var(--ln);border-radius:2px;
-  padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;
-  cursor:pointer;transition:border-color .18s,transform .15s}
+.opc{background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:border-color .18s,transform .15s}
 .opc:hover{border-color:rgba(212,160,48,.5);transform:translateY(-2px)}
-.op-ico{width:46px;height:46px;border-radius:2px;display:flex;align-items:center;justify-content:center;
-  font-size:20px;background:linear-gradient(135deg,#080e1e,#142038);border:1px solid var(--ln2)}
+.op-ico{width:46px;height:46px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(135deg,#080e1e,#142038);border:1px solid var(--ln2)}
 .op-name{font-size:11px;font-weight:700;color:var(--tx);text-align:center;line-height:1.3}
 .op-sub{font-size:9px;color:var(--tx3)}
 .stars{font-size:9px;letter-spacing:1px}
-.s6{color:var(--golh)} .s5{color:#a0c4e8} .s4{color:#7a90b8} .s3{color:var(--tx3)}
-.inf-b{font-size:8px;color:var(--red);font-family:var(--mo);border:1px solid rgba(240,96,96,.25);
-  padding:1px 5px;border-radius:2px}
+.s6{color:var(--golh)}.s5{color:#a0c4e8}.s4{color:#7a90b8}.s3{color:var(--tx3)}
+.inf-b{font-size:8px;color:var(--red);font-family:var(--mo);border:1px solid rgba(240,96,96,.25);padding:1px 5px;border-radius:2px}
 
 /* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;
-  display:none;align-items:center;justify-content:center;padding:20px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;display:none;align-items:center;justify-content:center;padding:20px}
 .overlay.on{display:flex;animation:fo .18s ease}
 @keyframes fo{from{opacity:0}to{opacity:1}}
-.modal{background:var(--p3);border:1px solid var(--ln2);border-radius:2px;
-  width:100%;max-width:560px;max-height:88vh;overflow-y:auto;
-  animation:mu .2s ease}
+.modal{background:var(--p3);border:1px solid var(--ln2);border-radius:2px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;animation:mu .2s ease}
 @keyframes mu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.m-hdr{background:linear-gradient(135deg,#080e1e,#101a30);border-bottom:2px solid var(--gold);
-  padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
-.m-ico{width:60px;height:60px;border-radius:2px;background:linear-gradient(135deg,#060c1c,#142038);
-  display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid var(--ln2);flex-shrink:0}
+.m-hdr{background:linear-gradient(135deg,#080e1e,#101a30);border-bottom:2px solid var(--gold);padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
+.m-ico{width:60px;height:60px;border-radius:2px;background:linear-gradient(135deg,#060c1c,#142038);display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid var(--ln2);flex-shrink:0}
 .m-ta{flex:1}
 .m-name{font-family:var(--sf);font-size:20px;font-weight:900;color:#fff;letter-spacing:.05em}
 .m-en{font-family:var(--mo);font-size:10px;color:var(--ice);letter-spacing:.18em;margin-top:3px}
 .m-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
-.m-close{background:none;border:1px solid var(--ln2);color:var(--tx2);font-size:14px;cursor:pointer;
-  width:28px;height:28px;border-radius:2px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:all .15s}
+.m-close{background:none;border:1px solid var(--ln2);color:var(--tx2);font-size:14px;cursor:pointer;width:28px;height:28px;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
 .m-close:hover{color:var(--golh);border-color:var(--gold)}
 .m-body{padding:20px 22px}
 .m-sec{margin-bottom:20px}
-.m-sl{font-family:var(--mo);font-size:10px;color:var(--ice);letter-spacing:.2em;
-  margin-bottom:8px;border-bottom:1px solid var(--ln);padding-bottom:5px}
+.m-sl{font-family:var(--mo);font-size:10px;color:var(--ice);letter-spacing:.2em;margin-bottom:8px;border-bottom:1px solid var(--ln);padding-bottom:5px}
 .m-tbl{width:100%;border-collapse:collapse}
 .m-tbl td{padding:7px 10px;border-bottom:1px solid rgba(26,37,64,.4);font-size:12px}
 .m-tbl td:first-child{color:var(--tx3);width:80px;font-family:var(--mo);font-size:10px;letter-spacing:.08em}
 .m-tbl tr:last-child td{border-bottom:none}
-.m-lore{font-family:var(--sf);font-size:13px;color:var(--tx);line-height:1.9;
-  background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px;letter-spacing:.03em}
-.m-note{background:rgba(212,160,48,.06);border-left:2px solid var(--gold);
-  padding:10px 14px;font-size:11px;color:var(--tx2);line-height:1.7;margin-top:12px}
+.m-lore{font-family:var(--sf);font-size:13px;color:var(--tx);line-height:1.9;background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px;letter-spacing:.03em}
+.m-note{background:rgba(212,160,48,.06);border-left:2px solid var(--gold);padding:10px 14px;font-size:11px;color:var(--tx2);line-height:1.7;margin-top:12px}
 .m-note a{color:var(--ice);text-decoration:none}
 
-/* ── SCENARIO ACCORDION ── */
+/* ── SCENARIO ── */
 .chap-list{display:flex;flex-direction:column;gap:6px}
 .chap-card{background:var(--p2);border:1px solid var(--ln);border-radius:3px;overflow:hidden;transition:border-color .18s}
 .chap-card:hover{border-color:var(--ln2)}
-.chap-hdr{display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;cursor:pointer;gap:12px;transition:background .15s;user-select:none}
+.chap-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;gap:12px;transition:background .15s;user-select:none}
 .chap-hdr:hover{background:rgba(212,160,48,.05)}
 .chap-hdr-l{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
 .chap-num{font-family:var(--mo);font-size:10px;color:var(--gold);letter-spacing:.14em;white-space:nowrap;flex-shrink:0}
-.chap-title{font-family:var(--sf);font-size:14px;font-weight:700;color:var(--tx);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chap-cnt{font-family:var(--mo);font-size:9px;color:var(--tx3);border:1px solid var(--ln);
-  padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0}
+.chap-title{font-family:var(--sf);font-size:14px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chap-cnt{font-family:var(--mo);font-size:9px;color:var(--tx3);border:1px solid var(--ln);padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0}
 .chap-hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .chap-arr{font-size:18px;color:var(--tx3);line-height:1;transition:transform .2s;display:inline-block}
-.chap-desc{padding:10px 18px 13px;font-size:12px;color:var(--tx2);line-height:1.7;
-  border-top:1px solid rgba(58,78,122,.3)}
+.chap-desc{padding:10px 18px 13px;font-size:12px;color:var(--tx2);line-height:1.7;border-top:1px solid rgba(58,78,122,.3)}
 .stage-list{border-top:1px solid var(--ln2)}
 .stage-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(46,61,98,.5);transition:background .13s}
 .stage-row:last-child{border-bottom:none}
 .stage-row:hover{background:rgba(212,160,48,.04)}
-.stage-id{font-family:var(--mo);font-size:10px;color:var(--gold);letter-spacing:.1em;
-  padding:12px 14px;border-right:1px solid rgba(46,61,98,.5);
-  min-width:70px;display:flex;align-items:flex-start;background:rgba(0,0,0,.15);flex-shrink:0}
+.stage-id{font-family:var(--mo);font-size:10px;color:var(--gold);letter-spacing:.1em;padding:12px 14px;border-right:1px solid rgba(46,61,98,.5);min-width:70px;display:flex;align-items:flex-start;background:rgba(0,0,0,.15);flex-shrink:0}
 .stage-body{padding:11px 16px;flex:1;min-width:0}
 .stage-name{font-family:var(--ss);font-size:12px;font-weight:700;color:var(--tx);margin-bottom:4px}
 .stage-sum{font-size:12px;color:var(--tx2);line-height:1.7}
@@ -228,26 +226,27 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .lore-title{font-family:var(--sf);font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
 .lore-desc{font-size:11px;color:var(--tx2);line-height:1.7}
 
+/* ── LOADING ── */
+.loading{padding:48px;text-align:center;font-family:var(--mo);font-size:11px;color:var(--tx3);letter-spacing:.2em}
+
 /* ── FOOTER ── */
-footer{max-width:1060px;margin:48px auto 0;border-top:1px solid var(--ln);
-  padding:18px 22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer{max-width:1060px;margin:48px auto 0;border-top:1px solid var(--ln);padding:18px 22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 footer span{font-family:var(--mo);font-size:10px;color:var(--tx3)}
 footer a{color:var(--ice);text-decoration:none}
 
-/* ── RESPONSIVE ── */
-@media(max-width:680px){
+@media(max-width:700px){
   .hgrid{grid-template-columns:1fr}
   .lore-grid{grid-template-columns:1fr}
-  .m-hdr{flex-wrap:wrap}
-  .hdr-r{display:none}
-  .chap-title{font-size:13px}
+  .k-grid{grid-template-columns:1fr}
+  .k-hero-title{font-size:28px}
+  .art-dtitle{font-size:22px}
+  .art-body-wrap,.art-detail-hero,.k-filter,.art-author{padding-left:20px;padding-right:20px}
 }
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-in">
     <a class="logo" href="https://sekai-log.com">
@@ -260,12 +259,11 @@ footer a{color:var(--ice);text-decoration:none}
     </a>
     <div class="hdr-r">
       <div class="dot"></div>
-      <span class="hdr-info">2026.03 / 藤乃宮遊</span>
+      <span class="hdr-info">藤乃宮遊</span>
     </div>
   </div>
 </header>
 
-<!-- NAV -->
 <nav class="nav-w">
   <div class="nav">
     <button class="nb on" data-tab="home">ホーム</button>
@@ -276,7 +274,7 @@ footer a{color:var(--ice);text-decoration:none}
   </div>
 </nav>
 
-<!-- ═══ HOME ═══ -->
+<!-- HOME -->
 <div id="pg-home" class="pg on">
   <div class="home-hero">
     <div class="home-ey">ARKNIGHTS KOUSATSU</div>
@@ -306,25 +304,43 @@ footer a{color:var(--ice);text-decoration:none}
   </div>
   <div class="log-box">
     <div class="log-hdr"><div class="log-hdr-t">◆ 更新ログ</div></div>
-    <div id="update-log"></div>
+    <div id="update-log"><div class="loading">LOADING...</div></div>
   </div>
 </div>
 
-<!-- ═══ 考察 ═══ -->
+<!-- 考察 -->
 <div id="pg-kousatsu" class="pg">
-  <!-- list view -->
   <div id="art-list-view">
-    <div class="k-intro"><strong>考察記事一覧</strong><br>アークナイツのシナリオ・世界観・キャラクターについての批評的考察です。中国語版設定資料・ゲーム内テキストをもとに、物語の構造と意味を読み解きます。</div>
-    <div class="sl" id="art-sl">ARTICLES</div>
-    <div class="art-list" id="art-list"></div>
+    <div class="k-hero">
+      <div class="k-hero-in">
+        <div class="k-hero-cat">CATEGORY</div>
+        <div class="k-hero-title">アークナイツ<em>考察</em></div>
+        <div class="k-hero-desc">シナリオ・キャラクター・世界観の深層を批評的に読み解く。<br>中国語版設定資料・ゲーム内テキストをもとに、物語の構造と意味を掘り下げます。</div>
+      </div>
+    </div>
+    <div class="k-filter">
+      <div class="k-filter-in">
+        <button class="kftb on" onclick="setArtFilter('全て')">すべて</button>
+        <button class="kftb" onclick="setArtFilter('世界考察')">世界考察</button>
+        <button class="kftb" onclick="setArtFilter('キャラ考察')">キャラ考察</button>
+        <button class="kftb" onclick="setArtFilter('シナリオ考察')">シナリオ考察</button>
+        <span class="k-count" id="art-count"></span>
+      </div>
+    </div>
+    <div class="k-grid" id="art-list"><div class="loading" style="grid-column:1/-1">LOADING...</div></div>
   </div>
-  <!-- detail view -->
   <div id="art-detail">
-    <button class="art-back" onclick="closeArticle()">← 考察一覧に戻る</button>
-    <div class="art-ey" id="d-ey"></div>
-    <div class="art-dtitle" id="d-title"></div>
-    <div class="art-dmeta" id="d-meta"></div>
-    <div class="art-body" id="d-body"></div>
+    <div class="art-detail-hero">
+      <div class="art-detail-hero-in">
+        <button class="art-back" onclick="closeArticle()">考察一覧に戻る</button>
+        <div class="art-ey" id="d-ey"></div>
+        <div class="art-dtitle" id="d-title"></div>
+        <div class="art-dmeta" id="d-meta"></div>
+      </div>
+    </div>
+    <div class="art-body-wrap">
+      <div class="art-body" id="d-body"></div>
+    </div>
     <div class="art-author">
       <div class="art-author-ico">✍</div>
       <div>
@@ -335,26 +351,26 @@ footer a{color:var(--ice);text-decoration:none}
   </div>
 </div>
 
-<!-- ═══ SCENARIO ═══ -->
+<!-- シナリオ -->
 <div id="pg-scenario" class="pg">
   <div class="sl" id="sc-sl">SCENARIO</div>
   <div class="ftabs" id="sc-tabs"></div>
-  <div class="chap-list" id="chap-list"></div>
+  <div class="chap-list" id="chap-list"><div class="loading">LOADING...</div></div>
 </div>
 
-<!-- ═══ OPERATORS ═══ -->
+<!-- オペレータ -->
 <div id="pg-operators" class="pg">
   <div class="sl" id="op-sl">OPERATOR DATABASE</div>
   <input class="srch" id="op-srch" placeholder="名前・国家・英語名で検索..." oninput="renderOps()">
   <div class="ftabs" id="op-class-tabs"></div>
   <div class="ftabs" id="op-rar-tabs"></div>
   <div class="op-count" id="op-count"></div>
-  <div class="op-grid" id="op-grid"></div>
+  <div class="op-grid" id="op-grid"><div class="loading">LOADING...</div></div>
 </div>
 
-<!-- ═══ LORE ═══ -->
+<!-- 世界設定 -->
 <div id="pg-lore" class="pg">
-  <div class="sl">WORLD LORE — テラの世界設定</div>
+  <div class="sl">WORLD LORE</div>
   <p style="margin-bottom:16px;font-size:12px;color:var(--tx2);font-family:var(--sf);line-height:1.8">PDF設定資料が届き次第、各項目に詳細な考察を追記予定。</p>
   <div class="lore-grid" id="lore-grid"></div>
 </div>
@@ -380,7 +396,7 @@ footer a{color:var(--ice);text-decoration:none}
         <div class="m-sl">CHARACTER LORE</div>
         <div class="m-lore" id="m-lore"></div>
       </div>
-      <div class="m-note">このサイトはキャラ設定・考察を中心とした個人サイトです。攻略・ステータスは <a href="https://wiki3.jp/arknightsjp" target="_blank">wiki3.jp/arknightsjp</a> へ。</div>
+      <div class="m-note">攻略・ステータスは <a href="https://wiki3.jp/arknightsjp" target="_blank">wiki3.jp/arknightsjp</a> へ。</div>
     </div>
   </div>
 </div>
@@ -392,139 +408,252 @@ footer a{color:var(--ice);text-decoration:none}
 </div>
 
 <script>
-/* ════════════════════════════════════
-   DATA
-════════════════════════════════════ */
-const UPDATES = [
-  {date:"2026-03-01", text:"考察「感染者という他者——テラ社会の排除構造」公開"},
-  {date:"2026-02-18", text:"考察「W という謎——リターニアの道具が笑い続ける理由」公開"},
-  {date:"2026-02-05", text:"考察「天災という装置——移動都市はなぜ哲学的に正しいのか」公開"},
-  {date:"2026-01-22", text:"考察「ケルシーとドクター——非対称な信頼関係の構造」公開"},
-  {date:"2026-01-10", text:"オペレータ設定集 初期構築"},
-];
+/* ════════════════════════
+   STATE
+════════════════════════ */
+let OPS = [], CHAPTERS = [], POSTS_INDEX = [];
+let opClsFilter = '全て', opRarFilter = 0;
+let scTypeFilter = 'メイン', openChapId = null;
+let artFilter = '全て';
 
-const ARTICLES = [
-  {id:1, title:"感染者という「他者」——テラ社会の排除構造と、ロドスが提示するオルタナティブ",
-   cat:"世界考察", date:"2026-03-01", tags:["感染者","社会構造","ロドス","テラ"],
-   exc:"アークナイツという作品が一貫して問い続けるのは、「社会から排除された者はどう生きるか」という問いである。感染症オリパシーに罹患した者——感染者——は、移動都市という閉じた空間の中で、労働力としてのみ消費され、人格として認められない。",
-   body:["アークナイツという作品が一貫して問い続けるのは、「社会から排除された者はどう生きるか」という問いである。","感染症オリパシーに罹患した者——感染者——は、移動都市という閉じた空間の中で、労働力としてのみ消費され、人格として認められない。これはSFの文脈で何度も繰り返されてきたテーマではあるが、アークナイツがそれをユニークにしているのは、「感染者の解放運動が悲劇に終わる」という逆説的な構造にある。","レユニオン運動は正義の旗の下に生まれたが、その内部は憎悪と絶望で充満していた。タルーラが象徴するように、「怒り」だけでは社会変革の持続的な基盤にならない。アークナイツが描くのは革命の失敗ではなく、革命が必要になってしまった社会の根腐れだ。","対してロドスは、「治療を提供しながら感染者を雇用する」という実用主義的な共存モデルを提示する。理想主義的に見えて、実はきわめてプラグマティックだ。ケルシーがドクターに対して一貫して距離を置くのも、感傷的な同情ではなく機能的な協力関係を組織として維持するためだと読める。","この構造は、現実世界の難民・移民問題や、障害者の社会参加議論と鋭く呼応する。アークナイツが批評たりうるのは、問題を「悪い人間」の存在に還元せず、構造的な問題として描くからだ。"]},
-  {id:2, title:"W という謎——リターニアの「道具」が笑い続ける理由",
-   cat:"キャラ考察", date:"2026-02-18", tags:["W","リターニア","自己同一性","虚無主義"],
-   exc:"Wというオペレータは、アークナイツのキャラクター群の中でも特異な存在だ。彼女は「目的を持たない」と公言しながら行動し、爆発を愛し、常に笑っている。その笑いが何を隠しているのかを、リターニアの設定と照合しながら読み解く。",
-   body:["Wというオペレータは、アークナイツのキャラクター群の中でも特異な存在だ。","彼女は「目的を持たない」と公言しながら行動し、爆発を愛し、常に笑っている。その笑いが何を隠しているのかを、リターニアの設定と照合しながら読み解く。","リターニアとは何か。作中で明かされる断片から組み立てると、それは「人間を道具として最適化する」国家装置だ。幼少期から才能を選別し、感情を排した工作員を育成する。Wはその産物であり、「W」という符号名が示す通り、個人名を持たない——あるいは持つことを許されなかった存在だ。","笑いは防衛機制だと私は読む。虚無主義的な笑いは、「意味を求めることをやめた」者が採用する生存戦略だ。意味がないなら、少なくとも楽しめる爆発を選ぶ。これは退廃ではなく、きわめて合理的な選択だ。","しかし彼女のシナリオには均衡を崩す一点がある。ドクターに対する反応だ。Wは他のほぼ全ての関係性において距離を保つが、ドクターに対してだけ、一種の「関心」を示す。それが何に由来するのかは明言されていないが、ドクターの記憶喪失という状態が、Wの「自己を消去された存在」と共鳴している可能性を指摘したい。"]},
-  {id:3, title:"天災という装置——「動く都市」はなぜ哲学的に正しいのか",
-   cat:"世界考察", date:"2026-02-05", tags:["天災","移動都市","文明論","地政学"],
-   exc:"テラの世界において「都市が動く」という設定は、単なるSF的な奇抜さではない。天災という不可避の暴力に対して人類が選んだ答えとして、移動都市という形態は哲学的な必然性を持っている。",
-   body:["テラの世界において「都市が動く」という設定は、単なるSF的な奇抜さではない。","天災という不可避の暴力に対して人類が選んだ答えとして、移動都市という形態は哲学的な必然性を持っている。","定住文明の前提は「土地は安全だ」という信頼だ。農業革命以来、人類は土地を所有し、土地に根ざした共同体を築いてきた。テラではその前提が崩壊している。定期的に訪れる天災が、いかなる固定建造物も無意味にする。","移動都市は、「場所への執着」を手放すことで生き延びた文明の形だ。しかしここに逆説がある。移動することで土地の固有性——歴史、文化、記憶——を継続的に失い続ける。チェルノボーグがウルサスの「記憶の都市」として機能していたのに、天災に飲まれたとき、失われるのは建物だけではない。","感染者問題と移動都市の関係も見落とせない。資源が限られた閉じた空間では、「役に立たない者」の排除圧力が高まる。感染者差別は、移動都市という構造が生み出す必然的な産物とも言える。","アークナイツが問うのは、「生存のために何を犠牲にするか」という問いだ。移動都市は最適解に見えて、その内側に腐敗の種を宿している。"]},
-  {id:4, title:"ケルシーとドクター——非対称な信頼関係の構造",
-   cat:"キャラ考察", date:"2026-01-22", tags:["ケルシー","ドクター","信頼","権力関係"],
-   exc:"ケルシーはドクターを信頼しているのか。この問いはアークナイツのメインシナリオを読み解く上で核心的だ。表面上、彼女はドクターに権限を与えながら、常に監視し、距離を保つ。",
-   body:["ケルシーはドクターを信頼しているのか。この問いはアークナイツのメインシナリオを読み解く上で核心的だ。","表面上、彼女はドクターに権限を与えながら、常に監視し、距離を保つ。モンスト（使い魔）を介した会話、感情を出さない言葉遣い、記憶喪失のドクターの「以前の姿」を知っているという優位性——これらは信頼というより、管理に近い。","しかしより深く読むと、ケルシーの態度はむしろ「過去に裏切られた者の信頼の形」だと思える。傷ついた者ほど、信頼を表明することへの抵抗が強い。ケルシーが抱える長い歴史（彼女が古代種であることを示す断片は複数ある）は、その疑念の正当化根拠になっている。","一方でドクターはなぜケルシーに従うのか。記憶がないという状態は、本来は行動の根拠を奪うはずだ。にもかかわらずドクターが動けるのは、ロドスという「文脈」と、ケルシーという「基準点」があるからではないか。","この非対称な関係は、師弟でも恋愛でも友情でもない。もっと稀な種類の、「共犯関係」に近い何かだと私は読む。"]},
-];
+const CI = {ガード:"⚔️",スナイパー:"🏹",キャスター:"🔮",メディック:"💊",サポーター:"🌿",スペシャリスト:"🔧",ヴァンガード:"🛡️",ディフェンダー:"🧱"};
+const SC_ICONS = {'メイン':'📖','サイド':'📜','ローグライク':'🎲','生息演算':'🏜️'};
+const SC_TYPES = ['メイン','サイド','ローグライク','生息演算'];
 
-const CI = {ガード:"⚔️",スナイパー:"🏹",キャスター:"🔮",メディック:"💊",サポーター:"🌿",スペシャリスト:"🔧",ヴァンガード:"🛡️",ディフェンダー:"🧱","（博士）":"📋"};
+/* ════════════════════════
+   DATA FETCH
+════════════════════════ */
+async function loadAll() {
+  try {
+    [OPS, CHAPTERS, POSTS_INDEX] = await Promise.all([
+      fetch('./operators.json').then(r => r.json()),
+      fetch('./chapters.json').then(r => r.json()),
+      fetch('./posts/index.json').then(r => r.json()),
+    ]);
+    initOps();
+    initScenario();
+    renderArticles();
+    renderHome();
+  } catch(e) {
+    console.error('データ読み込みエラー:', e);
+  }
+}
 
-const OPS = [
-  {name:"シルバーアッシュ",en:"SilverAsh",rarity:6,cls:"ガード",sub:"デュアルブレード",nation:"クルビア",gender:"男",cv:"中村悠一",infected:false,lore:"クルビア最大の企業「寒芒クルビア」の経営者。本名はトオル・ドランドゥ=エスクェーブル。感染者問題への独自の姿勢を持つ実業家兼前線オペレータ。"},
-  {name:"エクシア",en:"Exusiai",rarity:6,cls:"スナイパー",sub:"ウィングリバー",nation:"ラテラーノ",gender:"女",cv:"岡咲美保",infected:false,lore:"ラテラーノ出身の天使族。陽気で食いしん坊な性格だが、戦闘では超精密射撃を発揮する稀有な才能の持ち主。"},
-  {name:"ホシグマ",en:"Hoshiguma",rarity:6,cls:"ディフェンダー",sub:"アーツガード",nation:"炎国",gender:"女",cv:"田中敦子",infected:false,lore:"炎国出身の鬼族。圧倒的な防御力と豪快な性格で隊員から慕われる精鋭ディフェンダー。"},
-  {name:"W",en:"W",rarity:6,cls:"スペシャリスト",sub:"エスポワール",nation:"リターニア",gender:"女",cv:"Lynn",infected:false,lore:"リターニアの工作員として育てられた過去を持つ謎の存在。爆発物を愛し、常に笑っている。符号名「W」しか持たない。"},
-  {name:"チェン",en:"Ch'en",rarity:6,cls:"ガード",sub:"アーツブレード",nation:"炎国",gender:"女",cv:"沢城みゆき",infected:false,lore:"炎国出身の龍族。龍門警察の刑事官として感染者問題と長年向き合ってきた。正義と現実の間で葛藤する。"},
-  {name:"アーミヤ",en:"Amiya",rarity:5,cls:"キャスター",sub:"コアキャスター",nation:"不明",gender:"女",cv:"M・A・O",infected:false,lore:"ロドス島のリーダー。若いながらも洞察力と判断力に優れ、オペレータたちから信頼される。その出自には深い謎がある。"},
-  {name:"ケルシー",en:"Kal'tsit",rarity:6,cls:"メディック",sub:"シングルターゲット",nation:"不明（古代種）",gender:"女",cv:"井上喜久子",infected:false,lore:"ロドスの医療責任者。その正体と長い歴史は謎に包まれており、ドクターの「以前の姿」を知る数少ない存在。"},
-  {name:"テキサス",en:"Texas",rarity:5,cls:"ヴァンガード",sub:"チャージ型",nation:"ラテラーノ",gender:"女",cv:"佐倉綾音",infected:false,lore:"狼族の女性オペレータ。元裏社会の構成員で、現在はロドスの精鋭として活動。過去との決別を模索している。"},
-  {name:"スカジ",en:"Skadi",rarity:6,cls:"ガード",sub:"デュアルブレード",nation:"エーギル",gender:"女",cv:"茅野愛衣",infected:false,lore:"深海からやってきた漁師族。無口で不思議な存在感を放つ。深淵に触れた者としての宿命を背負う。"},
-  {name:"サリア",en:"Saria",rarity:6,cls:"ディフェンダー",sub:"アーツガード",nation:"ラテラーノ",gender:"女",cv:"Lynn",infected:false,lore:"ラテラーノ出身の天使族。ロドスの医療・戦闘両面を支える精鋭。ケルシーと深い因縁を持つ。"},
-  {name:"プラマニクス",en:"Pramanix",rarity:5,cls:"サポーター",sub:"ディアクティベーター",nation:"クルビア",gender:"女",cv:"水瀬いのり",infected:false,lore:"クルビア出身のシャーマン族。呪術的な能力で味方を支援する。シルバーアッシュの妹。"},
-  {name:"エイヤフィヤトラ",en:"Eyjafjalla",rarity:6,cls:"キャスター",sub:"コアキャスター",nation:"ヴィクトリア",gender:"女",cv:"花澤香菜",infected:false,lore:"ヴィクトリア出身の魔法師。高い術能力を持つが実験精神が旺盛すぎて危険なことも多い。サイレンスの親友。"},
-  {name:"ジェシカ",en:"Jessica",rarity:4,cls:"スナイパー",sub:"マークスマン",nation:"ヴィクトリア",gender:"女",cv:"小原莉子",infected:false,lore:"内気な性格のスナイパー。緊張しやすいが、戦場では類まれな集中力を発揮する。"},
-  {name:"マウンテン",en:"Mountain",rarity:6,cls:"ガード",sub:"スラッシャー",nation:"炎国",gender:"男",cv:"小西克幸",infected:false,lore:"虎族の大柄なオペレータ。荒々しい外見に反して冷静沈着で哲学的な思考を持つ。孤独を好む一匹狼。"},
-  {name:"ニアール",en:"Nearl",rarity:5,cls:"ディフェンダー",sub:"アーツガード",nation:"ラテラーノ",gender:"女",cv:"Lynn",infected:true,lore:"鉄鎚のニアールとして知られる騎士族。感染後も戦い続けることを選んだ元競技場チャンピオン。"},
-  {name:"ニアールアルター",en:"Nearl the Radiant Knight",rarity:6,cls:"ガード",sub:"デュアルブレード",nation:"ラテラーノ",gender:"女",cv:"Lynn",infected:true,lore:"感染者となったニアールの覚醒形態。光のアーツをまとい、新たな騎士の在り方を示す。"},
-  {name:"スズラン",en:"Suzuran",rarity:6,cls:"サポーター",sub:"ディアクティベーター",nation:"クルビア",gender:"女",cv:"安野希世乃",infected:false,lore:"キツネ族の幼いオペレータ。無邪気な外見の裏に凄まじい術能力を秘める。その能力の起源は謎。"},
-  {name:"アイリーニ",en:"Irene",rarity:6,cls:"サポーター",sub:"ディアクティベーター",nation:"ラテラーノ",gender:"女",cv:"石川由依",infected:false,lore:"ラテラーノの審問官。剣と信仰心を武器に感染者犯罪者を追う。正義への確固たる意志を持つ。"},
-  {name:"シャイニング",en:"Shining",rarity:6,cls:"メディック",sub:"マルチターゲット",nation:"ラテラーノ",gender:"女",cv:"種﨑敦美",infected:false,lore:"ラテラーノ出身の医師。冷静で知的。サリアとは深い関係にある謎多き存在。"},
-  {name:"ナイチンゲール",en:"Nightingale",rarity:6,cls:"メディック",sub:"サポーター",nation:"ヴィクトリア",gender:"女",cv:"Lynn",infected:true,lore:"鳥族の感染者医師。自らも感染しながら、他の感染者を救うために戦い続ける矛盾と使命の体現者。"},
-  {name:"ワーファリン",en:"Warfarin",rarity:5,cls:"メディック",sub:"シングルターゲット",nation:"ウルサス",gender:"女",cv:"大原さやか",infected:false,lore:"ウルサス出身の医師兼研究者。血液研究に情熱を注ぐ。その研究手法はやや倫理的に問題があるとも言われる。"},
-  {name:"サイレンス",en:"Silence",rarity:5,cls:"メディック",sub:"マルチターゲット",nation:"ヴィクトリア",gender:"女",cv:"内田真礼",infected:false,lore:"鳥族の医師。ドローンを使った遠隔医療を得意とする。エイヤフィヤトラとは旧友の関係にある。"},
-  {name:"イフリート",en:"Ifrit",rarity:6,cls:"キャスター",sub:"スプリットキャスター",nation:"ウルサス",gender:"女",cv:"悠木碧",infected:true,lore:"感染者の少女。強力な炎のアーツを持つが制御が難しく、感情の起伏も激しい。ケルシーが特別な関心を寄せる。"},
-  {name:"スパイン",en:"Specter",rarity:6,cls:"ガード",sub:"デュアルブレード",nation:"エーギル",gender:"女",cv:"東山奈央",infected:true,lore:"エーギル出身の感染者。深淵の力に触れた不安定な状態を抱えながらも戦場に立ち続ける存在。"},
-  {name:"ブレイズ",en:"Blaze",rarity:6,cls:"ガード",sub:"スラッシャー",nation:"ヴィクトリア",gender:"女",cv:"三森すずこ",infected:false,lore:"ヴィクトリア出身の猫族。明るく積極的な性格でチェーンソーを武器に戦う豪快なオペレータ。"},
-  {name:"ロサ",en:"Rosa",rarity:6,cls:"スナイパー",sub:"ヘッドハンター",nation:"クルビア",gender:"女",cv:"Lynn",infected:false,lore:"クルビア出身の熊族狙撃手。大型の重力銃で敵を拘束しながら仕留める戦術家。"},
-  {name:"パッセンジャー",en:"Passenger",rarity:6,cls:"キャスター",sub:"プリズムキャスター",nation:"ヴィクトリア",gender:"男",cv:"Lynn",infected:false,lore:"複数の属性を操る高位キャスター。その正体や過去には多くの謎が残る放浪者。"},
-  {name:"フラムテイル",en:"Flametail",rarity:6,cls:"ヴァンガード",sub:"レジャー",nation:"炎国",gender:"女",cv:"上田麗奈",infected:false,lore:"炎国出身の狐族ヴァンガード。チェンの旧友で、感染者支援を訴える活動家でもある。"},
-  {name:"テキサスアルター",en:"Texas the Omertosa",rarity:6,cls:"スペシャリスト",sub:"エスポワール",nation:"ラテラーノ",gender:"女",cv:"佐倉綾音",infected:false,lore:"テキサスのもう一面。ラテラーノの審問官として秘密任務を帯びた別の姿。過去と現在の狭間に立つ。"},
-  {name:"ニェン",en:"Nian",rarity:6,cls:"ディフェンダー",sub:"アーツガード",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"炎国の伝説的な獣族。長い歴史を持ち、その実力と知識は他を圧倒する。その本性は謎のまま。"},
-  {name:"ユー",en:"Yu",rarity:6,cls:"ディフェンダー",sub:"プロテクター",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"炎国の古代から続く龍族の末裔。圧倒的な防御力でロドスを支える守護者的存在。"},
-  {name:"アンゴン",en:"Angelina",rarity:6,cls:"サポーター",sub:"サモナー",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"感情豊かで快活な少女サポーター。呼び出した使い魔で広範囲をサポートする。"},
-  {name:"スカジアルター",en:"Skadi the Corrupting Heart",rarity:6,cls:"サポーター",sub:"バード",nation:"エーギル",gender:"女",cv:"茅野愛衣",infected:false,lore:"スカジが深淵に取り込まれた姿。歌声で全体を強化するが、その代償として自我が揺らぎ続ける。"},
-  {name:"ドロシー",en:"Dorothy",rarity:6,cls:"サポーター",sub:"サモナー",nation:"コロンビア",gender:"女",cv:"Lynn",infected:false,lore:"コロンビア出身の科学者。昆虫型機械を召喚し戦場を制圧する天才研究者。"},
-  {name:"カーフーフ",en:"Kafka",rarity:6,cls:"スペシャリスト",sub:"タペローデール",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"謎多い暗殺者型スペシャリスト。ミヅキの物語と深く関わる存在として描かれる。"},
-  {name:"ミヅキ",en:"Mizuki",rarity:6,cls:"スペシャリスト",sub:"プッシャー",nation:"エーギル",gender:"男",cv:"Lynn",infected:false,lore:"エーギルとロドスの関わりを描く物語の中心人物。深海の意志と地上の生の間で引き裂かれる。"},
-  {name:"サガ",en:"Saga",rarity:6,cls:"ヴァンガード",sub:"フラッガー",nation:"ヴィクトリア",gender:"女",cv:"Lynn",infected:false,lore:"ヴィクトリア出身の僧侶型ヴァンガード。宗教的使命感と深い自己犠牲の精神を持つ戦士。"},
-  {name:"ゴールデングロー",en:"GoldenGlow",rarity:6,cls:"キャスター",sub:"スプリットキャスター",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"黄金の輝きを放つ高位キャスター。複数の敵を同時に攻撃する術で戦場を制圧する天才少女。"},
-  {name:"スルト",en:"Surtr",rarity:6,cls:"ガード",sub:"デュアルブレード",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"北欧神話の炎の巨人の名を持つオペレータ。自己犠牲を厭わない攻撃スタイルが特徴。その出自は謎。"},
-  {name:"バフ",en:"Bagpipe",rarity:6,cls:"ヴァンガード",sub:"チャージ型",nation:"ヴィクトリア",gender:"女",cv:"Lynn",infected:false,lore:"ヴィクトリア出身の積極的なヴァンガード。スコットランドをイメージした民族衣装が特徴的。"},
-  {name:"ファートゥス",en:"Vigil",rarity:6,cls:"ヴァンガード",sub:"レジャー",nation:"炎国",gender:"男",cv:"松岡禎丞",infected:false,lore:"炎国出身の狼族ヴァンガード。孤独な旅人的性格を持ち、謎めいた過去を抱える一匹狼。"},
-  {name:"レッドアルター",en:"Reed the Flame Shadow",rarity:6,cls:"キャスター",sub:"スプリットキャスター",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"レッドの覚醒形態。炎影となった彼女は炎と影を自在に操る高位術師へと変容を遂げた。"},
-  {name:"レッド",en:"Reed",rarity:5,cls:"ガード",sub:"アーツブレード",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"炎国出身の寡黙な戦士。感情を内に秘め、過去の傷と向き合いながら戦場に立ち続ける。"},
-  {name:"マグランヌ",en:"Magallan",rarity:6,cls:"サポーター",sub:"マスク",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"探検家肌の研究者。複数のドローンで偵察・支援・封鎖を行う万能型サポーター。"},
-  {name:"ルーメン",en:"Lumen",rarity:6,cls:"メディック",sub:"シングルターゲット",nation:"不明（古代種）",gender:"男",cv:"Lynn",infected:false,lore:"古代種のメディック。光を操る回復アーツで仲間を支える謎めいた存在。ケルシーとの関係が示唆される。"},
-  {name:"司霆レイズ",en:"Leizi the Thunderbringer",rarity:6,cls:"キャスター",sub:"スプリットキャスター",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"炎国の雷術師。広範囲の雷撃で敵集団を一掃する高火力キャスター。龍門の秩序を守る者。"},
-  {name:"斬業ホシグマ",en:"Hoshiguma the Breacher",rarity:6,cls:"ディフェンダー",sub:"アーツガード",nation:"炎国",gender:"女",cv:"田中敦子",infected:false,lore:"ホシグマの強化別衣装。より攻撃的なスタイルへ変化し、守護から突破へその姿勢を変えた。"},
-  {name:"赤刀明霄チェン",en:"Ch'en the Holungday",rarity:6,cls:"ガード",sub:"アーツブレード",nation:"炎国",gender:"女",cv:"沢城みゆき",infected:false,lore:"辞歳行イベント実装。解放されたチェンの一面を見せる別衣装。炎国の年越し行事の中で何かが変わる。"},
-  {name:"タラクサカム",en:"Talulah",rarity:5,cls:"スナイパー",sub:"マークスマン",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"辞歳行イベント実装のスナイパー。精密射撃と高機動性を兼ね備えた新鋭オペレータ。"},
-  {name:"ヂィー",en:"Zhee",rarity:5,cls:"キャスター",sub:"コアキャスター",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"辞歳行イベント実装の術師。強力なアーツ攻撃を持つ炎国系キャスター。"},
-  {name:"ウァン",en:"Wan",rarity:6,cls:"メディック",sub:"マルチターゲット",nation:"炎国",gender:"女",cv:"Lynn",infected:false,lore:"新実装の炎国系メディック。広域回復と高い術造詣を兼ね備える。その正体には謎が残る。"},
-  {name:"ケルン",en:"Köln",rarity:6,cls:"ディフェンダー",sub:"プロテクター",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"本源衛士モジュール対応の防衛型オペレータ。その出自と目的は現在も調査中。"},
-  {name:"フィラエ",en:"Philae",rarity:6,cls:"ディフェンダー",sub:"アーツガード",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"本源衛士モジュール実装。古代文明の遺産を宿す防衛型オペレータ。"},
-  {name:"スワイア",en:"Swire",rarity:5,cls:"ガード",sub:"アーツブレード",nation:"ヴィクトリア",gender:"女",cv:"Lynn",infected:false,lore:"ヴィクトリアの名門スワイア家出身。プライドが高いが実力は本物の武闘派オペレータ。"},
-  {name:"グラベル",en:"Gravel",rarity:4,cls:"スペシャリスト",sub:"シフトシールド",nation:"不明",gender:"女",cv:"田村ゆかり",infected:false,lore:"ドクターを誰より敬愛する忠実なオペレータ。その過剰なまでの忠誠心の背景には複雑な過去がある。"},
-  {name:"ポデンコ",en:"Podenco",rarity:4,cls:"サポーター",sub:"デセレレーター",nation:"不明",gender:"女",cv:"Lynn",infected:true,lore:"感染者のサポーターオペレータ。植物アーツで敵の動きを鈍らせる。穏やかな性格の持ち主。"},
-  {name:"ムース",en:"Mousse",rarity:4,cls:"ガード",sub:"アーツブレード",nation:"不明",gender:"女",cv:"木村珠莉",infected:true,lore:"感染者のアーツブレードオペレータ。術と剣を組み合わせた独自のスタイルで戦う。"},
-  {name:"メランサ",en:"Melantha",rarity:3,cls:"ガード",sub:"アーツブレード",nation:"不明",gender:"女",cv:"安野希世乃",infected:false,lore:"黒猫族のオペレータ。前線で戦う基本的なガードとして運用される若手。"},
-  {name:"ラヴァ",en:"Lava",rarity:3,cls:"キャスター",sub:"コアキャスター",nation:"不明",gender:"女",cv:"大野柚布子",infected:true,lore:"感染者のキャスターオペレータ。炎属性のアーツで敵を焼き尽くす。"},
-  {name:"スポット",en:"Spot",rarity:3,cls:"ディフェンダー",sub:"プロテクター",nation:"不明",gender:"男",cv:"Lynn",infected:false,lore:"訓練中のロドス防衛隊員。素直な性格の若手オペレータ。"},
-  {name:"ミスタ",en:"Myrtle",rarity:4,cls:"ヴァンガード",sub:"チャージ型",nation:"不明",gender:"女",cv:"Lynn",infected:false,lore:"妖精のような小さな体を持つヴァンガード。効率よくDPを生産し前線を支える。"},
-  {name:"ミヅキアルター",en:"Mizuki & Caerula Arbor",rarity:6,cls:"スペシャリスト",sub:"プッシャー",nation:"エーギル",gender:"男",cv:"Lynn",infected:false,lore:"深海の意志と一体化しつつあるミヅキの姿。生と深淵の境界に立つ最終的な問い。"},
-  {name:"豊川祥子",en:"Togawa Sakiko",rarity:6,cls:"ガード",sub:"アーツブレード",nation:"（コラボ）",gender:"女",cv:"コラボキャラ",infected:false,lore:"アイドルマスター シャイニーカラーズとのコラボオペレータ。"},
-  {name:"ハルカ",en:"Haruka",rarity:6,cls:"スナイパー",sub:"ウィングリバー",nation:"（コラボ）",gender:"女",cv:"コラボキャラ",infected:false,lore:"アイドルマスター シャイニーカラーズとのコラボオペレータ。"},
-];
+/* ════════════════════════
+   NAV
+════════════════════════ */
+function goTab(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.getElementById('pg-' + id).classList.add('on');
+  document.querySelector('[data-tab="' + id + '"]').classList.add('on');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => goTab(b.dataset.tab)));
 
-const CHAPTERS = [
-  {id:"ch0",num:"序章",title:"ロドスの目覚め",type:"メイン",status:"実装済",desc:"記憶を失ったドクターがロドスに目覚め、アーミヤと出会うプロローグ。",stages:[{id:"0-1",name:"目覚め",sum:"ドクターが長い眠りから覚醒。アーミヤが傍らにいる。記憶は完全に失われている。"},{id:"0-2",name:"ロドスへの帰還",sum:"ロドスが緊急事態に直面していることが判明。ドクターは即座に戦場へ投入される。"},{id:"0-3",name:"最初の戦闘",sum:"ロドスを狙う謎の勢力との初戦。アーミヤと共に撃退するが、状況は依然不明瞭。"},{id:"0-4",name:"ブリーフィング",sum:"ケルシーがドクターの状況を説明。記憶喪失の原因と、ドクターの「以前の姿」に言及。"}]},
-  {id:"ch1",num:"第1章",title:"深入虎穴（龍門への潜入）",type:"メイン",status:"実装済",desc:"ロドスが龍門に接近。感染者を巡る争いの渦中に飛び込む。",stages:[{id:"1-1",name:"龍門接近",sum:"ロドスが龍門近郊に停泊。チェンとの初接触が図られる。"},{id:"1-2",name:"レユニオンの影",sum:"感染者解放組織「レユニオン」が龍門周辺で活動していることが確認される。"},{id:"1-3",name:"チェンとの邂逅",sum:"龍門警察刑事官チェンが登場。感染者犯罪への強硬姿勢と、その内側にある葛藤が垣間見える。"},{id:"1-4",name:"地下街の攻防",sum:"レユニオンの一団が龍門地下街を掌握。ロドスが介入を決める。"},{id:"1-5",name:"ミーシャの証言",sum:"若い感染者の少女ミーシャが登場。レユニオンに関わる情報と、彼女の父の消息が語られる。"},{id:"1-6",name:"レユニオンの論理",sum:"レユニオン兵士の独白。感染者として差別され続けた者の怒りと絶望が描かれる。"},{id:"1-7",name:"龍門への浸透",sum:"ロドス隊が龍門市内へ。増大するレユニオンの勢力と、動き始める龍門警察。"},{id:"1-8",name:"タルーラの影",sum:"レユニオン幹部タルーラの名が初めて言及される。その圧倒的な戦闘力の噂が流れる。"},{id:"1-9",name:"分断",sum:"龍門市内で部隊が分断される。チェンとドクターが別ルートで動くことに。"},{id:"1-10",name:"ミーシャの選択",sum:"ミーシャがレユニオンと関わった経緯が明かされる。父の死とその真相。"},{id:"1-11",name:"突破口",sum:"龍門外縁の封鎖を突破。チェンの驚異的な戦闘力が初めて発揮される。"},{id:"1-12",name:"第1章の幕引き",sum:"龍門での初戦が終結。しかしレユニオンの本格攻勢はこれからだと判明する。"}]},
-  {id:"ch2",num:"第2章",title:"異客（異邦の客人）",type:"メイン",status:"実装済",desc:"龍門の内部に潜入したレユニオン。ロドスと龍門警察が共同戦線を張る。",stages:[{id:"2-1",name:"龍門警察との協定",sum:"チェンがロドスとの一時協力を正式に承認。政治的な綱引きが始まる。"},{id:"2-2",name:"市街の混乱",sum:"感染者市民とレユニオンが混在する市街地。誰が敵か判断できない状況。"},{id:"2-3",name:"ラップランドの宣告",sum:"レユニオンの狼族工作員ラップランドが登場。テキサスに対し過去を突きつける。"},{id:"2-4",name:"テキサスの過去",sum:"テキサスがラテラーノ出身であること、そして裏社会との関係が示唆される。"},{id:"2-5",name:"ロドスの倫理",sum:"感染者を保護すべきか排除すべきか——ロドス内部での意見対立が表面化。"},{id:"2-6",name:"チェンの独断",sum:"チェンが独断でレユニオンの一団を追う。龍門警察との軋轢が生じる。"}]},
-  {id:"ch3",num:"第3章",title:"天灾（天の災い）",type:"メイン",status:"実装済",desc:"天災の接近が報告される。レユニオンはその混乱を利用しようとしている。",stages:[{id:"3-1",name:"天災の予兆",sum:"龍門周辺で天災の前兆が観測される。気象データが異常値を示し始める。"},{id:"3-2",name:"避難命令",sum:"龍門の一部区画に避難命令が発令。感染者住民は後回しにされる現実。"},{id:"3-3",name:"ガールの登場",sum:"謎の感染者の少女「ガール」が登場。強大なアーツ能力と、その正体の謎。"},{id:"3-4",name:"ケルシーの疑念",sum:"ケルシーがドクターの過去について新たな手がかりを得る。しかし語ろうとしない。"},{id:"3-5",name:"天灾の接近",sum:"天災が龍門に迫る。レユニオンと自然災害の二重の脅威に追い詰められる。"}]},
-  {id:"ch4",num:"第4章",title:"生于泥沼（泥沼に生まれて）",type:"メイン",status:"実装済",desc:"龍門の感染者スラムを巡る戦い。差別と貧困の現実が描かれる。",stages:[{id:"4-1",name:"スラムへの潜入",sum:"龍門の感染者居住区（スラム）に踏み込む。そこに広がる貧困と絶望の光景。"},{id:"4-2",name:"住民の告白",sum:"スラムの感染者住民がレユニオンを支持する理由を語る。体制への憎悪の深さ。"},{id:"4-3",name:"タルーラとの遭遇",sum:"レユニオン最強幹部タルーラと初めて直接対峙。圧倒的な力差を見せつけられる。"},{id:"4-4",name:"ミーシャの死",sum:"戦闘の混乱の中でミーシャが死亡。ドクターとアーミヤに深い影を落とす。"},{id:"4-5",name:"タルーラの目的",sum:"タルーラの動機の一端が明かされる。「解放」と「復讐」の間で揺れる存在。"},{id:"4-6",name:"第4章の決算",sum:"龍門スラムの戦いが収束。レユニオンの真の標的が龍門中枢だと判明する。"}]},
-  {id:"ch5",num:"第5章",title:"大道朝天（大道は天に向かう）",type:"メイン",status:"実装済",desc:"チェルノボーグへ向かうロドスとレユニオンの攻防。ウルサスの闇が語られ始める。",stages:[{id:"5-1",name:"チェルノボーグへ",sum:"ロドスがウルサスの移動都市チェルノボーグへ向かう。レユニオンはすでに内部に浸透。"},{id:"5-2",name:"ウルサスの体制",sum:"ウルサスが感染者をいかに扱ってきたか。国家的な抑圧の歴史が語られる。"},{id:"5-3",name:"ウルサス学生自治団",sum:"元ウルサス軍学生たちの自治組織が登場。彼らの理想と絶望が交差する。"},{id:"5-4",name:"ガールの記憶",sum:"「ガール」がウルサス出身の感染者であることが示される。その過去に何があったのか。"},{id:"5-5",name:"チェルノボーグの惨状",sum:"チェルノボーグ内部は既に戦場と化している。市民は逃げ場を失っている。"},{id:"5-6",name:"タルーラの号令",sum:"タルーラがレユニオン全軍に総攻撃を命じる。その目に宿る虚無と憎悪。"}]},
-  {id:"ch6",num:"第6章",title:"孤星（孤独な星）",type:"メイン",status:"実装済",desc:"チェルノボーグ市街戦の激化。ウルサス学生自治団の悲劇。",stages:[{id:"6-1",name:"孤立した市民",sum:"チェルノボーグ市民が完全に孤立。行政機能は崩壊しており、自衛するしかない状況。"},{id:"6-2",name:"学生自治団の戦い",sum:"元軍学生たちが市民を守るため武器を取る。理想と現実の間で消耗していく。"},{id:"6-3",name:"ガールの本質",sum:"「ガール」がイフリートであることがここで確定。感情とアーツの制御不能ぶりが描かれる。"},{id:"6-4",name:"孤星の意味",sum:"「誰も見ていなくても、正しいことをする」——学生自治団の信念が語られる。"},{id:"6-5",name:"崩壊の始まり",sum:"チェルノボーグの一部構造が崩壊し始める。天災の影響が都市内部にまで及んでいる。"}]},
-  {id:"ch7",num:"第7章",title:"吾道一以贯之",type:"メイン",status:"実装済",desc:"タルーラの真実と、レユニオン崩壊の始まり。",stages:[{id:"7-1",name:"タルーラの正体",sum:"タルーラがかつてのロドス関係者だったことが示唆される。ケルシーとの因縁。"},{id:"7-2",name:"Wの介入",sum:"謎の傭兵Wが登場。どちらの陣営にも属さず、独自の目的で動いている。"},{id:"7-3",name:"チェンの覚悟",sum:"チェンがタルーラと単独で決着をつけようとする。龍門刑事としての限界と超越。"},{id:"7-4",name:"タルーラとチェンの対話",sum:"一騎打ちの中で、タルーラの本当の動機が語られる。怒りの下にある悲嘆。"},{id:"7-5",name:"天災の直撃",sum:"チェルノボーグに天災が直撃。都市は壊滅的なダメージを受ける。"}]},
-  {id:"ch8",num:"第8章",title:"旧日光（旧い日の光）",type:"メイン",status:"実装済",desc:"チェルノボーグ陥落後の後処理。生存者の救出と、失われたものの重さ。",stages:[{id:"8-1",name:"廃墟の中で",sum:"チェルノボーグが廃墟となった後の静寂。生存者の捜索が始まる。"},{id:"8-2",name:"イフリートの処遇",sum:"ケルシーがイフリートについて難しい判断を下す。治療か、隔離か。"},{id:"8-3",name:"Wとの取引",sum:"Wがロドスに対し、情報と引き換えに奇妙な条件を提示する。"},{id:"8-4",name:"タルーラの消息",sum:"チェンと戦ったタルーラの行方が不明となる。生存しているかどうかすら不明。"}]},
-  {id:"ch9",num:"第9章",title:"统与分（統べることと分かれること）",type:"メイン",status:"実装済",desc:"龍門での決戦へ向けてロドスが動く。そして真の黒幕の姿が浮かび上がる。",stages:[{id:"9-1",name:"龍門の再編",sum:"混乱が続く龍門の秩序を再建しようとする動き。しかし別の勢力が暗躍している。"},{id:"9-2",name:"黒幕の影",sum:"レユニオンを裏から操っていた第三勢力の存在が示唆される。"},{id:"9-3",name:"炎国との接触",sum:"炎国が事態に介入してくる。国際政治の複雑さ。"},{id:"9-4",name:"ケルシーの過去",sum:"ケルシーが古代からの存在であることを示す断片が語られる。その長い歴史と罪。"},{id:"9-5",name:"チェンの決断",sum:"チェンが龍門警察を離れる決断をする。制度の枠内では守れないものがある。"}]},
-  {id:"ch10",num:"第10章",title:"回声（木霊する声）",type:"メイン",status:"実装済",desc:"龍門の最終決戦。アーミヤの真の力と、レユニオンとの決着。",stages:[{id:"10-1",name:"龍門包囲",sum:"龍門が複数の敵勢力に包囲される。内側からも混乱が生じている。"},{id:"10-2",name:"アーミヤの覚悟",sum:"アーミヤが「ロドスのリーダー」としての力を解放する決意をする。"},{id:"10-3",name:"アーミヤの力",sum:"アーミヤが持つ特殊な源石アーツ能力が初めて全開で発動する。その意味と代償。"},{id:"10-4",name:"回声の意味",sum:"かつて龍門に木霊した叫びは——感染者たちの声は、届いたのか。問いとともに幕が閉じる。"}]},
-  {id:"ch11",num:"第11章",title:"不息的雷鸣（やまない雷鳴）",type:"メイン",status:"実装済",desc:"ヴィクトリアを舞台に幕が開く新章。ニアールの騎士道とヴィクトリアの闇。",stages:[{id:"11-1",name:"ヴィクトリアへ",sum:"ロドスがヴィクトリア本土に接近。帝国の内乱と感染者問題が複雑に絡み合っている。"},{id:"11-2",name:"ニアールの帰郷",sum:"ニアール（ラディアントナイト）がヴィクトリアの故郷に戻る。歓迎と侮蔑が交差する。"},{id:"11-3",name:"ヴィクトリア貴族の腐敗",sum:"ヴィクトリア貴族階級が感染者を利用・搾取していた実態が明らかになる。"},{id:"11-4",name:"騎士の誓い",sum:"ニアールが感染者の騎士として新たな誓いを立てる。従来の騎士道への問い直し。"},{id:"11-5",name:"雷鳴の予兆",sum:"ヴィクトリア内乱の火種が燃え上がる。やがて帝国そのものを揺るがす嵐に。"}]},
-  {id:"ch12",num:"第12章",title:"恶水（濁った水）",type:"メイン",status:"実装済",desc:"ヴィクトリア内戦の深化。深海文明エーギルの影がちらつく。",stages:[{id:"12-1",name:"内戦の激化",sum:"ヴィクトリア各派閥が全面衝突。ロドスはその中で独自の立場を保とうとする。"},{id:"12-2",name:"エーギルの痕跡",sum:"ヴィクトリアの古い遺跡にエーギル文明の痕跡が発見される。両者の繋がりの謎。"},{id:"12-3",name:"スカジの苦悩",sum:"スカジが地上に上がってきた目的が語られる。深海へ帰れない理由と、地上への複雑な感情。"},{id:"12-4",name:"濁った水の底",sum:"表面には見えない歴史の汚濁——誰が何を隠してきたか。その全容が見え始める。"}]},
-  {id:"ch13",num:"第13章",title:"炎下的圣者（炎の下の聖者）",type:"メイン",status:"実装済",desc:"ヴィクトリアの決戦。王室の秘密と、消えない炎。",stages:[{id:"13-1",name:"聖域の崩壊",sum:"ヴィクトリアが誇った「秩序」の幻想が完全に崩れ去る。帝国の虚構の終わり。"},{id:"13-2",name:"皇族の業",sum:"ヴィクトリア王室が何代にもわたって隠し続けてきた「業」が明かされる。"},{id:"13-3",name:"ニアールの光",sum:"騎士の光が闇に向けて放たれる。感染者でも聖者たりうるという宣言。"},{id:"13-4",name:"炎の下に残るもの",sum:"英雄譚が終わった後に残るのは何か。焼け跡の灰の中に見えるもの。"}]},
-  {id:"ch14",num:"第14章",title:"何处是家园（どこが故郷か）",type:"メイン",status:"実装済",desc:"根無し草として生きる者たちの物語。ドクターの過去に新たな光が当たる。",stages:[{id:"14-1",name:"ロドスの内省",sum:"連続した戦いの後、ロドス全体で自らの在り方を問い直す時間が訪れる。"},{id:"14-2",name:"ドクターの断片",sum:"ドクターの記憶の断片がさらに戻ってくる。以前の自分が下した決断の片鱗。"},{id:"14-3",name:"ケルシーの告白",sum:"ケルシーがドクターにかつての経緯を一部開示する。なぜドクターが眠っていたのか。"},{id:"14-4",name:"故郷という問い",sum:"帰る場所がないからこそ、共に作る——という結論に至る者たちがいる。"}]},
-  {id:"ch15",num:"第15章",title:"苍穹之上（蒼穹の彼方）",type:"メイン",status:"実装済",desc:"テラの空の真実へ。世界の根幹に触れる核心の章。",stages:[{id:"15-1",name:"空への問い",sum:"テラの「空」が実は何であるか——それを知る者が少数いることが示される。"},{id:"15-2",name:"古代種の証言",sum:"ケルシーが初めて自らの本当の出自について語り始める。"},{id:"15-3",name:"天災の正体",sum:"天災が単なる自然現象ではなく、より大きな意志の産物である可能性が提示される。"},{id:"15-4",name:"ドクターの使命",sum:"ドクターが以前に何をしていたか、なぜ眠らせられたかが明らかになる。"},{id:"15-5",name:"蒼穹の彼方へ",sum:"物語は次の段階へ。テラという閉じた世界の「外」への問いが開かれる。"}]},
-  {id:"ch16",num:"第16章",title:"（タイトル未公開）",type:"メイン",status:"予定",desc:"次章。詳細は未公開。",stages:[]},
-  // SIDE
-  {id:"sv1",num:"サイドストーリー",title:"Maria Nearl",type:"サイド",status:"実装済",desc:"ニアールが感染者として闘技場で戦い続けた記録。鉄鎚のニアール伝説の真実。",stages:[{id:"S1-1",name:"闘技場への帰還",sum:"感染が発覚したニアールが故郷を追われ、闘技場に舞い戻る経緯。"},{id:"S1-2",name:"観衆の二面性",sum:"ニアールを英雄として崇める同じ口が、感染者として侮辱する矛盾。"},{id:"S1-3",name:"ブラッドブーンとの因縁",sum:"闘技場の背後にあるブラッドブーン家の思惑。ニアールはその駒に過ぎなかったのか。"},{id:"S1-4",name:"最後の試合",sum:"感染者騎士として最後に何を証明するか——ニアール最大の見せ場。"}]},
-  {id:"sv2",num:"サイドストーリー",title:"Twilight of Wolumonde",type:"サイド",status:"実装済",desc:"ウルサスの小さな町ヴォルモンデを巡る悲劇と記録。感染者差別の縮図。",stages:[{id:"S2-1",name:"ヴォルモンデの平和",sum:"感染者と非感染者が比較的共存していた小さな町。しかしそれは脆いバランスだった。"},{id:"S2-2",name:"レユニオンの侵入",sum:"レユニオンの一団がヴォルモンデに入り込む。住民たちは選択を迫られる。"},{id:"S2-3",name:"町の分断",sum:"住民が感染者擁護派と排除派に分裂。隣人同士が敵になっていく。"},{id:"S2-4",name:"ヴォルモンデの終焉",sum:"町は救われなかった。しかし記録は残った。その記録が何を伝えるか。"}]},
-  {id:"sv3",num:"サイドストーリー",title:"Stultifera Navis",type:"サイド",status:"実装済",desc:"エーギルの意志とスカジの最終的な選択。スカジアルター誕生の物語。",stages:[{id:"S3-1",name:"船と深淵",sum:"スラルフェルニルの船が深淵に近づく。エーギルの意志が最大化する場所。"},{id:"S3-2",name:"スカジの限界",sum:"スカジが自我を保てる限界が近づいている。深淵の声が大きくなっていく。"},{id:"S3-3",name:"腐食する心",sum:"スカジが「腐食する心」と呼ばれる存在へと変容していく過程。自我と深淵の融合。"},{id:"S3-4",name:"寂滅の先へ",sum:"消えることを選ばなかった——それがスカジアルターの核心。"}]},
-  {id:"sv4",num:"サイドストーリー",title:"Il Siracusano",type:"サイド",status:"実装済",desc:"シラクサの暗黒街と、テキサスの過去との対峙。テキサスアルター誕生の物語。",stages:[{id:"S4-1",name:"シラクサの掟",sum:"裏社会が統治するシラクサ。ロドスが知らずに踏み込んでしまった領域。"},{id:"S4-2",name:"テキサスの代償",sum:"テキサスがかつてこの街に何を残し、何を持ち去ったか。"},{id:"S4-3",name:"オメルタの掟",sum:"沈黙の掟——どこまでが義理で、どこからが本物の意志か。"},{id:"S4-4",name:"テキサスアルターの誕生",sum:"テキサスが選んだ新たな在り方。ラテラーノの審問官としての覚醒。"}]},
-  {id:"sv5",num:"サイドストーリー",title:"Lone Trail",type:"サイド",status:"実装済",desc:"ロドスと宇宙、そしてテラの空の真実に迫るイベント。コロンビアの秘密研究。",stages:[{id:"S5-1",name:"空への問い",sum:"テラの「外」が存在するのか——宇宙という概念がロドスに持ち込まれる。"},{id:"S5-2",name:"ヴィルポ研究所",sum:"コロンビアの秘密研究施設。テラの大気層と、その向こうを調査していた者たち。"},{id:"S5-3",name:"ドクターの記憶",sum:"ドクターがかつてこの研究に関わっていた可能性が示唆される。"},{id:"S5-4",name:"孤独な軌跡",sum:"誰も見ていない場所で積み上げてきた研究の意味。誰かに届く前に消えていく光。"}]},
-  {id:"sv6",num:"サイドストーリー",title:"辞歳行",type:"サイド",status:"実装済",desc:"炎国の年越し行事を背景に描かれる。チェンが炎国に帰った理由と、赤刀明霄チェンの誕生。",stages:[{id:"S6-1",name:"炎国の年越し",sum:"龍門での騒動が落ち着き、チェンが炎国本土で新年を迎える。"},{id:"S6-2",name:"赤刀の意味",sum:"チェンが新たな武器「赤刀」を手にする。それが示す彼女の変化。"},{id:"S6-3",name:"炎国の慶典",sum:"年越し行事の華やかさの裏にある炎国の政治的緊張。"},{id:"S6-4",name:"明霄への問い",sum:"「明霄」という名に込められた意味——チェンが次の章で担う役割の予告。"}]},
-  // ROGUELIKE
-  {id:"rl2",num:"統合戦略 #2",title:"ファントムと緋き貴石",type:"ローグライク",status:"常設",desc:"ファントムが主役のローグライク型コンテンツ。仮面の下の真実と幻想都市の謎。",stages:[{id:"R2-P",name:"仮面の男",sum:"ファントムの過去——劇団員だった彼が仮面をつけるようになった理由。"},{id:"R2-1",name:"幻想都市カルモン",sum:"幻影に満ちた都市カルモンに迷い込む。現実と虚構の境目が曖昧に。"},{id:"R2-2",name:"緋き貴石の呪い",sum:"この地に伝わる「緋き貴石」の伝説と、それが与える狂気。"},{id:"R2-E",name:"素顔",sum:"最終的にファントムが仮面を外すとき——そこに何があったか。"}]},
-  {id:"rl3",num:"統合戦略 #3",title:"ミヅキと紺碧の樹",type:"ローグライク",status:"常設",desc:"エーギルの深海都市とミヅキの物語。生と深淵の境界で選択を迫られる。",stages:[{id:"R3-P",name:"水底の少年",sum:"ミヅキがなぜ地上に来たのか。エーギルでの暮らしと、上へ昇りたかった理由。"},{id:"R3-1",name:"紺碧の樹",sum:"深海の巨木「紺碧の樹」の伝説。エーギル文明の核心に触れる象徴。"},{id:"R3-2",name:"カーフーフとの出会い",sum:"謎の女性カーフーフがミヅキの前に現れる。彼女の目的は何か。"},{id:"R3-E",name:"選択",sum:"ミヅキが最終的に下す選択と、その意味。生とは何かという問いへの答え。"}]},
-  // 生息演算
-  {id:"ec1",num:"生息演算",title:"熱砂秘聞",type:"生息演算",status:"常設",desc:"サルゴン砂漠を舞台にした謎解き型コンテンツ。砂の下に眠る秘密と、砂漠の民の生き方。",stages:[{id:"E1-1",name:"砂漠への降下",sum:"熱砂の地へと降り立つ。灼熱の環境と、そこで生きる民の強さ。"},{id:"E1-2",name:"古代の地図",sum:"砂漠に眠る遺跡を示す古地図が発見される。誰が残し、何のために。"},{id:"E1-3",name:"オアシスの秘密",sum:"砂漠のオアシスが実は人工的に維持されていた。その仕組みと設計者。"},{id:"E1-4",name:"熱砂の結末",sum:"砂漠に隠された秘密の全容が明かされる。砂は記憶を消すが、石は残る。"}]},
-];
+/* ════════════════════════
+   HOME
+════════════════════════ */
+function renderHome() {
+  // 更新ログは記事一覧から自動生成
+  const log = document.getElementById('update-log');
+  log.innerHTML = POSTS_INDEX.slice(0, 5).map(a =>
+    `<div class="log-row"><span class="log-date">${a.date}</span><span class="log-text">考察「${a.title.substring(0,30)}…」公開</span></div>`
+  ).join('');
+}
 
+/* ════════════════════════
+   考察
+════════════════════════ */
+function setArtFilter(f) {
+  artFilter = f;
+  document.querySelectorAll('.kftb').forEach(b => {
+    b.classList.toggle('on', b.textContent.trim() === (f==='全て'?'すべて':f));
+  });
+  renderArticles();
+}
+
+function renderArticles() {
+  const filtered = artFilter==='全て' ? POSTS_INDEX : POSTS_INDEX.filter(a => a.cat === artFilter);
+  document.getElementById('art-count').textContent = filtered.length + ' 件';
+  document.getElementById('art-list').innerHTML = filtered.map(a => `
+    <div class="art-card" onclick="openArticle('${a.id}')">
+      <div class="art-card-in">
+        <div class="art-cat-label">${a.date} / ${a.cat}</div>
+        <div class="art-title">${a.title}</div>
+        <div class="art-tags">${(a.tags||[]).map(t=>`<span class="art-tag">#${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function openArticle(id) {
+  let article;
+  try {
+    article = await fetch(`./posts/${id}.json`).then(r => r.json());
+  } catch(e) {
+    alert('記事を読み込めませんでした。');
+    return;
+  }
+  document.getElementById('art-list-view').style.display = 'none';
+  const d = document.getElementById('art-detail');
+  d.classList.add('on');
+  const pillCls = article.cat==='世界考察'?'k-pill k-pill-w':'k-pill k-pill-c';
+  document.getElementById('d-ey').textContent = `${article.cat} — ${article.date}`;
+  document.getElementById('d-title').textContent = article.title;
+  document.getElementById('d-meta').innerHTML =
+    `<span class="${pillCls}">${article.cat}</span>` +
+    `<span class="art-dmeta-date">${article.date}</span>` +
+    (article.tags||[]).map(t=>`<span class="art-tag">#${t}</span>`).join('');
+  document.getElementById('d-body').innerHTML = article.body.map(p => `<p>${p}</p>`).join('');
+  window.scrollTo(0, 0);
+}
+
+function closeArticle() {
+  document.getElementById('art-list-view').style.display = '';
+  document.getElementById('art-detail').classList.remove('on');
+  window.scrollTo(0, 0);
+}
+
+/* ════════════════════════
+   SCENARIO
+════════════════════════ */
+function initScenario() {
+  document.getElementById('sc-tabs').innerHTML = SC_TYPES.map(t =>
+    `<button class="ftb${t===scTypeFilter?' on':''}" onclick="setScType('${t}')">${SC_ICONS[t]} ${t}</button>`
+  ).join('');
+  renderScenario();
+}
+
+function setScType(t) {
+  scTypeFilter = t;
+  openChapId = null;
+  document.querySelectorAll('#sc-tabs .ftb').forEach(b => {
+    b.classList.toggle('on', b.textContent.includes(t));
+  });
+  renderScenario();
+}
+
+function renderScenario() {
+  const chaps = CHAPTERS.filter(c => c.type === scTypeFilter);
+  const total = chaps.reduce((a,c) => a + c.stages.length, 0);
+  document.getElementById('sc-sl').textContent = `SCENARIO — ${total} ステージ収録`;
+  document.getElementById('chap-list').innerHTML = chaps.map(ch => {
+    const isOpen = openChapId === ch.id;
+    const stags = {'実装済':'tg','予定':'tf','復刻中':'tb','常設':'tg'};
+    const stag = `<span class="tag ${stags[ch.status]||'tf'}">${ch.status}</span>`;
+    const stages = isOpen
+      ? (ch.stages.length
+          ? `<div class="stage-list">${ch.stages.map(s=>`
+              <div class="stage-row">
+                <div class="stage-id">${s.id}</div>
+                <div class="stage-body"><div class="stage-name">${s.name}</div><div class="stage-sum">${s.sum}</div></div>
+              </div>`).join('')}</div>`
+          : `<div class="stage-list"><div style="padding:16px 20px;font-size:12px;color:var(--tx3);font-style:italic">実装待ち。</div></div>`)
+      : `<div class="chap-desc">${ch.desc}</div>`;
+    return `
+      <div class="chap-card">
+        <div class="chap-hdr" onclick="toggleChap('${ch.id}')">
+          <div class="chap-hdr-l">
+            <span class="chap-num">${ch.num}</span>
+            <span class="chap-title">${ch.title}</span>
+            ${ch.stages.length ? `<span class="chap-cnt">${ch.stages.length} ステージ</span>` : ''}
+          </div>
+          <div class="chap-hdr-r">${stag}<span class="chap-arr" style="transform:${isOpen?'rotate(90deg)':'none'}">›</span></div>
+        </div>
+        ${stages}
+      </div>`;
+  }).join('');
+}
+
+function toggleChap(id) {
+  openChapId = openChapId === id ? null : id;
+  renderScenario();
+}
+
+/* ════════════════════════
+   OPERATORS
+════════════════════════ */
+function initOps() {
+  document.getElementById('op-sl').textContent = `OPERATOR DATABASE — ${OPS.length}名収録`;
+  const classes = ['全て', ...Array.from(new Set(OPS.map(o=>o.cls))).sort()];
+  document.getElementById('op-class-tabs').innerHTML = classes.map(c =>
+    `<button class="ftb${c===opClsFilter?' on':''}" onclick="setOpCls('${c}')">${CI[c]||''} ${c}</button>`
+  ).join('');
+  document.getElementById('op-rar-tabs').innerHTML = [0,6,5,4,3].map(r =>
+    `<button class="ftb${r===opRarFilter?' on':''}" onclick="setOpRar(${r})">${r===0?'全レア':'★'+r}</button>`
+  ).join('');
+  renderOps();
+}
+
+function setOpCls(c) {
+  opClsFilter = c;
+  document.querySelectorAll('#op-class-tabs .ftb').forEach(b => {
+    const label = b.textContent.trim().replace(/^[^\s]*\s/,'');
+    b.classList.toggle('on', label === c || (c==='全て' && b.textContent.includes('全て')));
+  });
+  renderOps();
+}
+function setOpRar(r) {
+  opRarFilter = r;
+  document.querySelectorAll('#op-rar-tabs .ftb').forEach(b => {
+    b.classList.toggle('on', (r===0&&b.textContent==='全レア') || b.textContent==='★'+r);
+  });
+  renderOps();
+}
+function renderOps() {
+  const q = (document.getElementById('op-srch').value||'').trim().toLowerCase();
+  const filtered = OPS.filter(op => {
+    const mq = !q || op.name.toLowerCase().includes(q) || op.en.toLowerCase().includes(q) || op.nation.includes(q);
+    const mc = opClsFilter==='全て' || op.cls===opClsFilter;
+    const mr = opRarFilter===0 || op.rarity===opRarFilter;
+    return mq && mc && mr;
+  });
+  document.getElementById('op-count').textContent = `${filtered.length} 件表示`;
+  const starsCls = n => n>=6?'s6':n===5?'s5':n===4?'s4':'s3';
+  document.getElementById('op-grid').innerHTML = filtered.map(op => `
+    <div class="opc" onclick='openModal(${JSON.stringify(op.name)})'>
+      <div class="op-ico">${CI[op.cls]||'❓'}</div>
+      <div class="op-name">${op.name}</div>
+      ${op.rarity?`<div class="stars ${starsCls(op.rarity)}">${'★'.repeat(op.rarity)}</div>`:''}
+      <div class="op-sub">${op.cls}</div>
+      ${op.infected?'<div class="inf-b">感染者</div>':''}
+    </div>`).join('');
+}
+
+/* ════════════════════════
+   MODAL
+════════════════════════ */
+function openModal(name) {
+  const op = OPS.find(o => o.name === name);
+  if (!op) return;
+  document.getElementById('m-ico').textContent = CI[op.cls]||'❓';
+  document.getElementById('m-name').textContent = op.name;
+  document.getElementById('m-en').textContent = op.en;
+  const sc = op.rarity>=6?'s6':op.rarity===5?'s5':op.rarity===4?'s4':'s3';
+  document.getElementById('m-badges').innerHTML =
+    (op.rarity?`<span class="stars ${sc}">${'★'.repeat(op.rarity)}</span>`:'')+
+    `<span class="tag tb">${op.cls}</span><span class="tag tf">${op.sub}</span>`+
+    (op.infected?'<span class="tag tr">感染者</span>':'');
+  document.getElementById('m-tbl').innerHTML = `
+    <tr><td>出身</td><td>${op.nation||'不明'}</td></tr>
+    <tr><td>性別</td><td>${op.gender||'不明'}</td></tr>
+    <tr><td>CV</td><td>${op.cv||'─'}</td></tr>
+    <tr><td>クラス</td><td>${op.cls} / ${op.sub}</td></tr>
+    <tr><td>レアリティ</td><td>${'★'.repeat(op.rarity||0)}</td></tr>`;
+  document.getElementById('m-lore').textContent = op.lore||'設定データ未入力';
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal(e) {
+  if (!e || e.target===document.getElementById('modal') || e.currentTarget?.classList.contains('m-close'))
+    document.getElementById('modal').classList.remove('on');
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.getElementById('modal').classList.remove('on'); });
+
+/* ════════════════════════
+   LORE (静的)
+════════════════════════ */
 const LORE_TOPICS = [
-  {icon:"🌍",title:"テラという世界",desc:"移動都市が大地を走り、感染症『オリパシー』が蔓延する世界の基本設定。"},
+  {icon:"🌍",title:"テラという世界",desc:"移動都市が大地を走り、感染症「オリパシー」が蔓延する世界の基本設定。"},
   {icon:"☠️",title:"オリパシーと源石",desc:"感染症の原因となる鉱石。感染者は差別され社会の底辺に置かれる。その構造の考察。"},
   {icon:"🏙️",title:"移動都市",desc:"巨大な移動する都市国家。定住文明の否定として生まれた文明の新しい形。"},
   {icon:"⚖️",title:"レユニオン運動",desc:"感染者解放を訴えた武装組織。正義が悲劇に終わった理由を読む。"},
@@ -537,255 +666,17 @@ const LORE_TOPICS = [
   {icon:"🔬",title:"ロドス島とは何か",desc:"医療船か？傭兵組織か？ロドスの存在意義の批評的考察。"},
   {icon:"🌌",title:"天災と古代文明",desc:"テラを周期的に襲う天災の正体。失われた文明の痕跡が示すもの。"},
 ];
+document.getElementById('lore-grid').innerHTML = LORE_TOPICS.map(t => `
+  <div class="lore-card">
+    <div class="lore-icon">${t.icon}</div>
+    <div class="lore-title">${t.title}</div>
+    <div class="lore-desc">${t.desc}</div>
+  </div>`).join('');
 
-/* ════════════════════════════════════
-   STATE
-════════════════════════════════════ */
-let curTab = 'home';
-let opClsFilter = '全て';
-let opRarFilter = 0;
-let scTypeFilter = 'メイン';
-let openChapId = null;
-
-/* ════════════════════════════════════
-   NAVIGATION
-════════════════════════════════════ */
-function goTab(id) {
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
-  document.getElementById('pg-' + id).classList.add('on');
-  document.querySelector('[data-tab="' + id + '"]').classList.add('on');
-  curTab = id;
-  window.scrollTo(0,0);
-}
-document.querySelectorAll('.nb').forEach(btn => {
-  btn.addEventListener('click', () => goTab(btn.dataset.tab));
-});
-
-/* ════════════════════════════════════
-   HOME
-════════════════════════════════════ */
-(function renderHome() {
-  const log = document.getElementById('update-log');
-  log.innerHTML = UPDATES.map(u =>
-    `<div class="log-row"><span class="log-date">${u.date}</span><span class="log-text">${u.text}</span></div>`
-  ).join('');
-})();
-
-/* ════════════════════════════════════
-   考察
-════════════════════════════════════ */
-(function renderArticles() {
-  const list = document.getElementById('art-list');
-  document.getElementById('art-sl').textContent = `ARTICLES — ${ARTICLES.length}件`;
-  list.innerHTML = ARTICLES.map(a => `
-    <div class="art-card" onclick="openArticle(${a.id})">
-      <div class="art-card-in">
-        <div class="art-meta">
-          <span class="tag ${a.cat==='世界考察'?'tg':'tb'}">${a.cat}</span>
-          <span style="font-family:var(--mo);font-size:10px;color:var(--tx3)">${a.date}</span>
-          <span style="margin-left:auto;color:var(--tx3)">›</span>
-        </div>
-        <div class="art-title">${a.title}</div>
-        <div class="art-exc">${a.exc}</div>
-        <div class="art-tags">${a.tags.map(t=>`<span class="art-tag">#${t}</span>`).join('')}</div>
-      </div>
-    </div>`
-  ).join('');
-})();
-
-function openArticle(id) {
-  const a = ARTICLES.find(x => x.id === id);
-  document.getElementById('art-list-view').style.display = 'none';
-  const d = document.getElementById('art-detail');
-  d.classList.add('on');
-  document.getElementById('d-ey').textContent = `${a.cat} — ${a.date}`;
-  document.getElementById('d-title').textContent = a.title;
-  document.getElementById('d-meta').innerHTML =
-    `<span class="tag ${a.cat==='世界考察'?'tg':'tb'}">${a.cat}</span>` +
-    a.tags.map(t=>`<span class="art-tag">#${t}</span>`).join('');
-  document.getElementById('d-body').innerHTML = a.body.map(p => `<p>${p}</p>`).join('');
-  window.scrollTo(0,0);
-}
-function closeArticle() {
-  document.getElementById('art-list-view').style.display = '';
-  document.getElementById('art-detail').classList.remove('on');
-  window.scrollTo(0,0);
-}
-
-/* ════════════════════════════════════
-   SCENARIO
-════════════════════════════════════ */
-const SC_TYPES = ['メイン','サイド','ローグライク','生息演算'];
-const SC_ICONS = {'メイン':'📖','サイド':'📜','ローグライク':'🎲','生息演算':'🏜️'};
-
-(function initScenario() {
-  const tabs = document.getElementById('sc-tabs');
-  tabs.innerHTML = SC_TYPES.map(t =>
-    `<button class="ftb${t===scTypeFilter?' on':''}" onclick="setScType('${t}')">${SC_ICONS[t]} ${t}</button>`
-  ).join('');
-  renderScenario();
-})();
-
-function setScType(t) {
-  scTypeFilter = t;
-  openChapId = null;
-  document.querySelectorAll('#sc-tabs .ftb').forEach(b => {
-    b.classList.toggle('on', b.textContent.trim().endsWith(t));
-  });
-  renderScenario();
-}
-
-function renderScenario() {
-  const chaps = CHAPTERS.filter(c => c.type === scTypeFilter);
-  const totalStages = chaps.reduce((a,c)=>a+c.stages.length,0);
-  document.getElementById('sc-sl').textContent = `SCENARIO — ${totalStages} ステージ収録`;
-  const list = document.getElementById('chap-list');
-  list.innerHTML = chaps.map(ch => {
-    const isOpen = openChapId === ch.id;
-    const stag = statusTag(ch.status);
-    const stagesHtml = isOpen
-      ? (ch.stages.length
-          ? `<div class="stage-list">${ch.stages.map(st=>`
-              <div class="stage-row">
-                <div class="stage-id">${st.id}</div>
-                <div class="stage-body">
-                  <div class="stage-name">${st.name}</div>
-                  <div class="stage-sum">${st.sum}</div>
-                </div>
-              </div>`).join('')}</div>`
-          : `<div class="stage-list"><div style="padding:16px 20px;font-size:12px;color:var(--tx3);font-style:italic">実装待ち。詳細は未公開。</div></div>`)
-      : `<div class="chap-desc">${ch.desc}</div>`;
-    return `
-      <div class="chap-card">
-        <div class="chap-hdr" onclick="toggleChap('${ch.id}')">
-          <div class="chap-hdr-l">
-            <span class="chap-num">${ch.num}</span>
-            <span class="chap-title">${ch.title}</span>
-            ${ch.stages.length ? `<span class="chap-cnt">${ch.stages.length} ステージ</span>` : ''}
-          </div>
-          <div class="chap-hdr-r">
-            ${stag}
-            <span class="chap-arr" style="transform:${isOpen?'rotate(90deg)':'none'}">›</span>
-          </div>
-        </div>
-        ${stagesHtml}
-      </div>`;
-  }).join('');
-}
-
-function toggleChap(id) {
-  openChapId = openChapId === id ? null : id;
-  renderScenario();
-}
-
-function statusTag(s) {
-  const map = {'実装済':'tg','予定':'tf','復刻中':'tb','常設':'tg'};
-  return `<span class="tag ${map[s]||'tf'}">${s}</span>`;
-}
-
-/* ════════════════════════════════════
-   OPERATORS
-════════════════════════════════════ */
-const ALL_CLASSES = ['全て', ...Array.from(new Set(OPS.map(o=>o.cls))).sort()];
-
-(function initOps() {
-  document.getElementById('op-sl').textContent = `OPERATOR DATABASE — ${OPS.length}名収録`;
-  // class tabs
-  document.getElementById('op-class-tabs').innerHTML = ALL_CLASSES.map(c =>
-    `<button class="ftb${c===opClsFilter?' on':''}" onclick="setOpCls('${c}')">${CI[c]||''} ${c}</button>`
-  ).join('');
-  // rarity tabs
-  document.getElementById('op-rar-tabs').innerHTML = [0,6,5,4,3].map(r =>
-    `<button class="ftb${r===opRarFilter?' on':''}" onclick="setOpRar(${r})">${r===0?'全レア':'★'+r}</button>`
-  ).join('');
-  renderOps();
-})();
-
-function setOpCls(c) {
-  opClsFilter = c;
-  document.querySelectorAll('#op-class-tabs .ftb').forEach(b => {
-    b.classList.toggle('on', b.textContent.trim().replace(/^[^\s]+\s/,'') === c || (c==='全て' && b.textContent.includes('全て')));
-  });
-  renderOps();
-}
-function setOpRar(r) {
-  opRarFilter = r;
-  document.querySelectorAll('#op-rar-tabs .ftb').forEach(b => {
-    b.classList.toggle('on', (r===0 && b.textContent==='全レア') || b.textContent==='★'+r);
-  });
-  renderOps();
-}
-function renderOps() {
-  const q = document.getElementById('op-srch').value.trim().toLowerCase();
-  const filtered = OPS.filter(op => {
-    const mq = !q || op.name.toLowerCase().includes(q) || op.en.toLowerCase().includes(q) || op.nation.includes(q);
-    const mc = opClsFilter==='全て' || op.cls===opClsFilter;
-    const mr = opRarFilter===0 || op.rarity===opRarFilter;
-    return mq && mc && mr;
-  });
-  document.getElementById('op-count').textContent = `${filtered.length} 件表示`;
-  const stars = n => {
-    if(!n) return '';
-    const cls = n>=6?'s6':n===5?'s5':n===4?'s4':'s3';
-    return `<div class="stars ${cls}">${'★'.repeat(n)}</div>`;
-  };
-  document.getElementById('op-grid').innerHTML = filtered.map(op => `
-    <div class="opc" onclick='openModal(${JSON.stringify(op.name)})'>
-      <div class="op-ico">${CI[op.cls]||'❓'}</div>
-      <div class="op-name">${op.name}</div>
-      ${stars(op.rarity)}
-      <div class="op-sub">${op.cls}</div>
-      ${op.infected?'<div class="inf-b">感染者</div>':''}
-    </div>`
-  ).join('');
-}
-
-/* ════════════════════════════════════
-   MODAL
-════════════════════════════════════ */
-function openModal(name) {
-  const op = OPS.find(o => o.name === name);
-  if (!op) return;
-  document.getElementById('m-ico').textContent = CI[op.cls]||'❓';
-  document.getElementById('m-name').textContent = op.name;
-  document.getElementById('m-en').textContent = op.en;
-  const stars = op.rarity ? `<span class="stars ${op.rarity>=6?'s6':op.rarity===5?'s5':op.rarity===4?'s4':'s3'}">${'★'.repeat(op.rarity)}</span>` : '';
-  document.getElementById('m-badges').innerHTML =
-    stars +
-    `<span class="tag tb">${op.cls}</span>` +
-    `<span class="tag tf">${op.sub}</span>` +
-    (op.infected?'<span class="tag tr">感染者</span>':'');
-  document.getElementById('m-tbl').innerHTML = `
-    <tr><td>出身</td><td>${op.nation||'不明'}</td></tr>
-    <tr><td>性別</td><td>${op.gender||'不明'}</td></tr>
-    <tr><td>CV</td><td>${op.cv||'─'}</td></tr>
-    <tr><td>クラス</td><td>${op.cls} / ${op.sub}</td></tr>
-    <tr><td>レアリティ</td><td>${'★'.repeat(op.rarity||0)}</td></tr>`;
-  document.getElementById('m-lore').textContent = op.lore||'設定データ未入力';
-  document.getElementById('modal').classList.add('on');
-}
-function closeModal(e) {
-  if (!e || e.target === document.getElementById('modal') || e.currentTarget.classList.contains('m-close')) {
-    document.getElementById('modal').classList.remove('on');
-  }
-}
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('modal').classList.remove('on');
-});
-
-/* ════════════════════════════════════
-   LORE
-════════════════════════════════════ */
-(function renderLore() {
-  document.getElementById('lore-grid').innerHTML = LORE_TOPICS.map(t => `
-    <div class="lore-card">
-      <div class="lore-icon">${t.icon}</div>
-      <div class="lore-title">${t.title}</div>
-      <div class="lore-desc">${t.desc}</div>
-    </div>`
-  ).join('');
-})();
+/* ════════════════════════
+   BOOT
+════════════════════════ */
+loadAll();
 </script>
 </body>
 </html>
