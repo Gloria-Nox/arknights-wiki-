@@ -396,7 +396,7 @@ footer a{color:var(--ice);text-decoration:none}
         <div class="m-sl">CHARACTER LORE</div>
         <div class="m-lore" id="m-lore"></div>
       </div>
-      <div class="m-note">攻略・ステータスは <a href="https://wiki3.jp/arknightsjp" target="_blank">wiki3.jp/arknightsjp</a> へ。</div>
+
     </div>
   </div>
 </div>
@@ -428,7 +428,7 @@ async function loadAll() {
     [OPS, CHAPTERS, POSTS_INDEX] = await Promise.all([
       fetch('./operators.json').then(r => r.json()),
       fetch('./chapters.json').then(r => r.json()),
-      fetch('./posts/index.json').then(r => r.json()),
+      fetch('./posts-index.json').then(r => r.json()),
     ]);
     initOps();
     initScenario();
@@ -489,7 +489,7 @@ function renderArticles() {
 async function openArticle(id) {
   let article;
   try {
-    article = await fetch(`./posts/${id}.json`).then(r => r.json());
+    article = await fetch(`./post-${id}.json`).then(r => r.json());
   } catch(e) {
     alert('記事を読み込めませんでした。');
     return;
