@@ -10,7 +10,6 @@
   gtag('js', new Date());
   gtag('config', 'G-2EKFMMWGGZ');
 </script>
-```
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>アークナイツ考察 — SEKAI LOG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +49,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .dot{width:5px;height:5px;background:var(--grn);border-radius:50%;animation:bl 1.8s step-end infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
 .hdr-info{font-family:var(--mo);font-size:9px;color:var(--tx3);letter-spacing:.15em}
+
+/* ── SITE NAV (sekai-log連携) ── */
+.site-nav{background:#0a0d1a;border-bottom:1px solid #1a1f35;padding:0 22px;display:flex;align-items:center;gap:0;overflow-x:auto}
+.site-nav-in{max-width:1060px;margin:0 auto;display:flex;gap:0;width:100%}
+.snb{font-family:var(--mo);font-size:10px;letter-spacing:.12em;color:#3a4e7a;background:none;border:none;padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;transition:color .15s;border-bottom:2px solid transparent}
+.snb:hover{color:var(--tx2)}
+.snb.here{color:var(--golh);border-bottom-color:var(--gold)}
+.snb-sep{color:#1a2040;font-size:12px;padding:8px 2px;pointer-events:none}
 
 /* ── NAV ── */
 .nav-w{background:var(--p2);border-bottom:1px solid var(--ln);position:sticky;top:54px;z-index:390;overflow-x:auto}
@@ -99,7 +106,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .log-date{font-family:var(--mo);font-size:10px;color:var(--tx3);white-space:nowrap}
 .log-text{font-size:12px;color:var(--tx2)}
 
-/* ── 考察 — sekai-log style ── */
+/* ── 考察 ── */
 .k-hero{position:relative;overflow:hidden;padding:52px 32px 44px;background:#0a0a0f;border-bottom:1px solid #1e1e2a}
 .k-hero::before{content:'';position:absolute;inset:0;
   background-image:repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(192,57,43,.06) 38px,rgba(192,57,43,.06) 39px),
@@ -110,14 +117,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .k-hero-title{font-family:var(--sf);font-size:42px;font-weight:800;color:#fff;line-height:1.25;letter-spacing:.04em;margin-bottom:16px}
 .k-hero-title em{color:var(--crimson-hi);font-style:normal}
 .k-hero-desc{font-size:13px;color:#888;line-height:1.9;max-width:520px}
-
 .k-filter{background:#0e0e16;border-bottom:1px solid #1a1a28;padding:14px 32px;position:sticky;top:101px;z-index:300}
 .k-filter-in{max-width:1060px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .kftb{background:none;border:1px solid #2a2a3a;color:#666;font-family:var(--ss);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 18px;cursor:pointer;transition:all .15s}
 .kftb:hover{border-color:var(--crimson);color:#ccc}
 .kftb.on{background:var(--crimson);border-color:var(--crimson);color:#fff}
 .k-count{margin-left:auto;font-family:var(--mo);font-size:10px;color:#444;letter-spacing:.1em}
-
 .k-grid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111118;border-top:1px solid #1a1a28}
 .art-card{background:#0d0d14;cursor:pointer;transition:background .15s;display:flex;flex-direction:column}
 .art-card:hover{background:#13131e}
@@ -125,11 +130,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .art-cat-label{font-family:var(--mo);font-size:10px;letter-spacing:.18em;color:var(--crimson-hi);margin-bottom:14px}
 .art-title{font-family:var(--sf);font-size:17px;font-weight:700;color:#e8e8ee;line-height:1.55;margin-bottom:14px;letter-spacing:.03em;flex:1}
 .art-card:hover .art-title{color:#fff}
-.art-exc{font-size:12px;color:#555;line-height:1.85;margin-bottom:16px}
 .art-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto}
 .art-tag{font-family:var(--mo);font-size:9px;color:#444;border:1px solid #222230;padding:2px 7px}
-
-/* 記事詳細 */
 #art-detail{display:none;background:#080810;min-height:100vh}
 #art-detail.on{display:block}
 .art-detail-hero{background:#0a0a0f;border-bottom:1px solid #1a1a28;padding:48px 32px 40px}
@@ -202,8 +204,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .m-tbl td:first-child{color:var(--tx3);width:80px;font-family:var(--mo);font-size:10px;letter-spacing:.08em}
 .m-tbl tr:last-child td{border-bottom:none}
 .m-lore{font-family:var(--sf);font-size:13px;color:var(--tx);line-height:1.9;background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px;letter-spacing:.03em}
-.m-note{background:rgba(212,160,48,.06);border-left:2px solid var(--gold);padding:10px 14px;font-size:11px;color:var(--tx2);line-height:1.7;margin-top:12px}
-.m-note a{color:var(--ice);text-decoration:none}
 
 /* ── SCENARIO ── */
 .chap-list{display:flex;flex-direction:column;gap:6px}
@@ -272,6 +272,17 @@ footer a{color:var(--ice);text-decoration:none}
     </div>
   </div>
 </header>
+
+<!-- サイト横断ナビ -->
+<div class="site-nav">
+  <div class="site-nav-in">
+    <a class="snb" href="https://sekai-log.com">📰 SEKAI LOG</a>
+    <span class="snb-sep">/</span>
+    <a class="snb here" href="https://arknights.sekai-log.com">🎮 アークナイツ</a>
+    <span class="snb-sep">/</span>
+    <a class="snb" href="#" style="opacity:.4;cursor:not-allowed;">⚔️ ギルティギア <span style="font-size:9px;color:#2a3a5a">準備中</span></a>
+  </div>
+</div>
 
 <nav class="nav-w">
   <div class="nav">
@@ -405,7 +416,6 @@ footer a{color:var(--ice);text-decoration:none}
         <div class="m-sl">CHARACTER LORE</div>
         <div class="m-lore" id="m-lore"></div>
       </div>
-
     </div>
   </div>
 </div>
@@ -417,9 +427,6 @@ footer a{color:var(--ice);text-decoration:none}
 </div>
 
 <script>
-/* ════════════════════════
-   STATE
-════════════════════════ */
 let OPS = [], CHAPTERS = [], POSTS_INDEX = [];
 let opClsFilter = '全て', opRarFilter = 0;
 let scTypeFilter = 'メイン', openChapId = null;
@@ -429,9 +436,6 @@ const CI = {ガード:"⚔️",スナイパー:"🏹",キャスター:"🔮",メ
 const SC_ICONS = {'メイン':'📖','サイド':'📜','ローグライク':'🎲','生息演算':'🏜️'};
 const SC_TYPES = ['メイン','サイド','ローグライク','生息演算'];
 
-/* ════════════════════════
-   DATA FETCH
-════════════════════════ */
 async function loadAll() {
   try {
     [OPS, CHAPTERS, POSTS_INDEX] = await Promise.all([
@@ -439,18 +443,10 @@ async function loadAll() {
       fetch('./chapters.json').then(r => r.json()),
       fetch('./posts-index.json').then(r => r.json()),
     ]);
-    initOps();
-    initScenario();
-    renderArticles();
-    renderHome();
-  } catch(e) {
-    console.error('データ読み込みエラー:', e);
-  }
+    initOps(); initScenario(); renderArticles(); renderHome();
+  } catch(e) { console.error('データ読み込みエラー:', e); }
 }
 
-/* ════════════════════════
-   NAV
-════════════════════════ */
 function goTab(id) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
@@ -460,20 +456,13 @@ function goTab(id) {
 }
 document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => goTab(b.dataset.tab)));
 
-/* ════════════════════════
-   HOME
-════════════════════════ */
 function renderHome() {
-  // 更新ログは記事一覧から自動生成
   const log = document.getElementById('update-log');
   log.innerHTML = POSTS_INDEX.slice(0, 5).map(a =>
     `<div class="log-row"><span class="log-date">${a.date}</span><span class="log-text">考察「${a.title.substring(0,30)}…」公開</span></div>`
   ).join('');
 }
 
-/* ════════════════════════
-   考察
-════════════════════════ */
 function setArtFilter(f) {
   artFilter = f;
   document.querySelectorAll('.kftb').forEach(b => {
@@ -497,12 +486,8 @@ function renderArticles() {
 
 async function openArticle(id) {
   let article;
-  try {
-    article = await fetch(`./post-${id}.json`).then(r => r.json());
-  } catch(e) {
-    alert('記事を読み込めませんでした。');
-    return;
-  }
+  try { article = await fetch(`./post-${id}.json`).then(r => r.json()); }
+  catch(e) { alert('記事を読み込めませんでした。'); return; }
   document.getElementById('art-list-view').style.display = 'none';
   const d = document.getElementById('art-detail');
   d.classList.add('on');
@@ -523,9 +508,6 @@ function closeArticle() {
   window.scrollTo(0, 0);
 }
 
-/* ════════════════════════
-   SCENARIO
-════════════════════════ */
 function initScenario() {
   document.getElementById('sc-tabs').innerHTML = SC_TYPES.map(t =>
     `<button class="ftb${t===scTypeFilter?' on':''}" onclick="setScType('${t}')">${SC_ICONS[t]} ${t}</button>`
@@ -534,11 +516,8 @@ function initScenario() {
 }
 
 function setScType(t) {
-  scTypeFilter = t;
-  openChapId = null;
-  document.querySelectorAll('#sc-tabs .ftb').forEach(b => {
-    b.classList.toggle('on', b.textContent.includes(t));
-  });
+  scTypeFilter = t; openChapId = null;
+  document.querySelectorAll('#sc-tabs .ftb').forEach(b => { b.classList.toggle('on', b.textContent.includes(t)); });
   renderScenario();
 }
 
@@ -546,42 +525,21 @@ function renderScenario() {
   const chaps = CHAPTERS.filter(c => c.type === scTypeFilter);
   const total = chaps.reduce((a,c) => a + c.stages.length, 0);
   document.getElementById('sc-sl').textContent = `SCENARIO — ${total} ステージ収録`;
+  const stags = {'実装済':'tg','予定':'tf','復刻中':'tb','常設':'tg'};
   document.getElementById('chap-list').innerHTML = chaps.map(ch => {
     const isOpen = openChapId === ch.id;
-    const stags = {'実装済':'tg','予定':'tf','復刻中':'tb','常設':'tg'};
     const stag = `<span class="tag ${stags[ch.status]||'tf'}">${ch.status}</span>`;
     const stages = isOpen
       ? (ch.stages.length
-          ? `<div class="stage-list">${ch.stages.map(s=>`
-              <div class="stage-row">
-                <div class="stage-id">${s.id}</div>
-                <div class="stage-body"><div class="stage-name">${s.name}</div><div class="stage-sum">${s.sum}</div></div>
-              </div>`).join('')}</div>`
+          ? `<div class="stage-list">${ch.stages.map(s=>`<div class="stage-row"><div class="stage-id">${s.id}</div><div class="stage-body"><div class="stage-name">${s.name}</div><div class="stage-sum">${s.sum}</div></div></div>`).join('')}</div>`
           : `<div class="stage-list"><div style="padding:16px 20px;font-size:12px;color:var(--tx3);font-style:italic">実装待ち。</div></div>`)
       : `<div class="chap-desc">${ch.desc}</div>`;
-    return `
-      <div class="chap-card">
-        <div class="chap-hdr" onclick="toggleChap('${ch.id}')">
-          <div class="chap-hdr-l">
-            <span class="chap-num">${ch.num}</span>
-            <span class="chap-title">${ch.title}</span>
-            ${ch.stages.length ? `<span class="chap-cnt">${ch.stages.length} ステージ</span>` : ''}
-          </div>
-          <div class="chap-hdr-r">${stag}<span class="chap-arr" style="transform:${isOpen?'rotate(90deg)':'none'}">›</span></div>
-        </div>
-        ${stages}
-      </div>`;
+    return `<div class="chap-card"><div class="chap-hdr" onclick="toggleChap('${ch.id}')"><div class="chap-hdr-l"><span class="chap-num">${ch.num}</span><span class="chap-title">${ch.title}</span>${ch.stages.length?`<span class="chap-cnt">${ch.stages.length} ステージ</span>`:''}</div><div class="chap-hdr-r">${stag}<span class="chap-arr" style="transform:${isOpen?'rotate(90deg)':'none'}">›</span></div></div>${stages}</div>`;
   }).join('');
 }
 
-function toggleChap(id) {
-  openChapId = openChapId === id ? null : id;
-  renderScenario();
-}
+function toggleChap(id) { openChapId = openChapId === id ? null : id; renderScenario(); }
 
-/* ════════════════════════
-   OPERATORS
-════════════════════════ */
 function initOps() {
   document.getElementById('op-sl').textContent = `OPERATOR DATABASE — ${OPS.length}名収録`;
   const classes = ['全て', ...Array.from(new Set(OPS.map(o=>o.cls))).sort()];
@@ -629,9 +587,6 @@ function renderOps() {
     </div>`).join('');
 }
 
-/* ════════════════════════
-   MODAL
-════════════════════════ */
 function openModal(name) {
   const op = OPS.find(o => o.name === name);
   if (!op) return;
@@ -658,9 +613,6 @@ function closeModal(e) {
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') document.getElementById('modal').classList.remove('on'); });
 
-/* ════════════════════════
-   LORE (静的)
-════════════════════════ */
 const LORE_TOPICS = [
   {icon:"🌍",title:"テラという世界",desc:"移動都市が大地を走り、感染症「オリパシー」が蔓延する世界の基本設定。"},
   {icon:"☠️",title:"オリパシーと源石",desc:"感染症の原因となる鉱石。感染者は差別され社会の底辺に置かれる。その構造の考察。"},
@@ -676,15 +628,8 @@ const LORE_TOPICS = [
   {icon:"🌌",title:"天災と古代文明",desc:"テラを周期的に襲う天災の正体。失われた文明の痕跡が示すもの。"},
 ];
 document.getElementById('lore-grid').innerHTML = LORE_TOPICS.map(t => `
-  <div class="lore-card">
-    <div class="lore-icon">${t.icon}</div>
-    <div class="lore-title">${t.title}</div>
-    <div class="lore-desc">${t.desc}</div>
-  </div>`).join('');
+  <div class="lore-card"><div class="lore-icon">${t.icon}</div><div class="lore-title">${t.title}</div><div class="lore-desc">${t.desc}</div></div>`).join('');
 
-/* ════════════════════════
-   BOOT
-════════════════════════ */
 loadAll();
 </script>
 </body>
