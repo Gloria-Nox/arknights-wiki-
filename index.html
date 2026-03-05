@@ -278,7 +278,7 @@ footer a{color:var(--ice);text-decoration:none}
   <div class="site-nav-in">
     <a class="snb" href="https://sekai-log.com">📰 SEKAI LOG</a>
     <span class="snb-sep">/</span>
-    <a class="snb here" href="https://arknights.sekai-log.com">🎮 アークナイツ</a>
+    <a class="snb here" href="https://log-ark.sekai-log.com">🎮 アークナイツ</a>
     <span class="snb-sep">/</span>
     <a class="snb" href="#" style="opacity:.4;cursor:not-allowed;">⚔️ ギルティギア <span style="font-size:9px;color:#2a3a5a">準備中</span></a>
   </div>
@@ -441,7 +441,7 @@ async function loadAll() {
     [OPS, CHAPTERS, POSTS_INDEX] = await Promise.all([
       fetch('./operators.json').then(r => r.json()),
       fetch('./chapters.json').then(r => r.json()),
-      fetch('./posts-index.json').then(r => r.json()),
+      fetch('./index.json').then(r => r.json()),
     ]);
     initOps(); initScenario(); renderArticles(); renderHome();
   } catch(e) { console.error('データ読み込みエラー:', e); }
@@ -486,7 +486,7 @@ function renderArticles() {
 
 async function openArticle(id) {
   let article;
-  try { article = await fetch(`./post-${id}.json`).then(r => r.json()); }
+  try { article = await fetch(`./${id}.json`).then(r => r.json()); }
   catch(e) { alert('記事を読み込めませんでした。'); return; }
   document.getElementById('art-list-view').style.display = 'none';
   const d = document.getElementById('art-detail');
