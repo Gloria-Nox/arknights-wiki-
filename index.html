@@ -186,7 +186,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;display:none;align-items:center;justify-content:center;padding:20px}
 .overlay.on{display:flex;animation:fo .18s ease}
 @keyframes fo{from{opacity:0}to{opacity:1}}
-.modal{background:var(--p3);border:1px solid var(--ln2);border-radius:2px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;animation:mu .2s ease}
+.modal{background:var(--p3);border:1px solid var(--ln2);border-radius:2px;width:100%;max-width:620px;max-height:88vh;overflow-y:auto;animation:mu .2s ease}
 @keyframes mu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .m-hdr{background:linear-gradient(135deg,#080e1e,#101a30);border-bottom:2px solid var(--gold);padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
 .m-ico{width:60px;height:60px;border-radius:2px;background:linear-gradient(135deg,#060c1c,#142038);display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid var(--ln2);flex-shrink:0}
@@ -203,7 +203,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .m-tbl td{padding:7px 10px;border-bottom:1px solid rgba(26,37,64,.4);font-size:12px}
 .m-tbl td:first-child{color:var(--tx3);width:80px;font-family:var(--mo);font-size:10px;letter-spacing:.08em}
 .m-tbl tr:last-child td{border-bottom:none}
-.m-lore{font-family:var(--sf);font-size:13px;color:var(--tx);line-height:1.9;background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px;letter-spacing:.03em}
+
+/* ── LORE SECTIONS ── */
+.m-lore-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.m-lore-tab{font-family:var(--mo);font-size:9px;letter-spacing:.08em;padding:3px 9px;border:1px solid var(--ln);background:var(--p2);color:var(--tx3);cursor:pointer;border-radius:2px;transition:all .15s}
+.m-lore-tab:hover{border-color:var(--gold);color:var(--tx)}
+.m-lore-tab.on{background:var(--gldim);border-color:var(--gold);color:var(--golh)}
+.m-lore-text{font-family:var(--sf);font-size:13px;color:var(--tx);line-height:1.9;background:var(--p2);border:1px solid var(--ln);border-radius:2px;padding:14px;letter-spacing:.03em;white-space:pre-wrap;min-height:80px}
 
 /* ── SCENARIO ── */
 .chap-list{display:flex;flex-direction:column;gap:6px}
@@ -381,7 +387,7 @@ footer a{color:var(--ice);text-decoration:none}
 <!-- オペレータ -->
 <div id="pg-operators" class="pg">
   <div class="sl" id="op-sl">OPERATOR DATABASE</div>
-  <input class="srch" id="op-srch" placeholder="名前・国家・英語名で検索..." oninput="renderOps()">
+  <input class="srch" id="op-srch" placeholder="名前・所属・英語名で検索..." oninput="renderOps()">
   <div class="ftabs" id="op-class-tabs"></div>
   <div class="ftabs" id="op-rar-tabs"></div>
   <div class="op-count" id="op-count"></div>
@@ -412,9 +418,10 @@ footer a{color:var(--ice);text-decoration:none}
         <div class="m-sl">PROFILE</div>
         <table class="m-tbl" id="m-tbl"></table>
       </div>
-      <div class="m-sec">
+      <div class="m-sec" id="m-lore-sec">
         <div class="m-sl">CHARACTER LORE</div>
-        <div class="m-lore" id="m-lore"></div>
+        <div class="m-lore-tabs" id="m-lore-tabs"></div>
+        <div class="m-lore-text" id="m-lore-text"></div>
       </div>
     </div>
   </div>
@@ -431,10 +438,17 @@ let OPS = [], CHAPTERS = [], POSTS_INDEX = [];
 let opClsFilter = '全て', opRarFilter = 0;
 let scTypeFilter = 'メイン', openChapId = null;
 let artFilter = '全て';
+let currentLoreSections = {}, currentLoreTab = '';
 
-const CI = {ガード:"⚔️",スナイパー:"🏹",キャスター:"🔮",メディック:"💊",サポーター:"🌿",スペシャリスト:"🔧",ヴァンガード:"🛡️",ディフェンダー:"🧱"};
+const CI = {
+  ガード:"⚔️", スナイパー:"🏹", キャスター:"🔮", メディック:"💊",
+  サポーター:"🌿", スペシャリスト:"🔧", ヴァンガード:"🛡️", ディフェンダー:"🧱"
+};
 const SC_ICONS = {'メイン':'📖','サイド':'📜','ローグライク':'🎲','生息演算':'🏜️'};
 const SC_TYPES = ['メイン','サイド','ローグライク','生息演算'];
+
+// セクション表示順
+const SECTION_ORDER = ['基礎情報','能力測定','総合性能','個人履歴','健康診断','情報資料','第一資料','第二資料','第三資料','第四資料','第五資料','アーツ評定','昇進記録','昇格資料一','昇格資料二','？？？'];
 
 async function loadAll() {
   try {
@@ -458,6 +472,7 @@ document.querySelectorAll('.nb').forEach(b => b.addEventListener('click', () => 
 
 function renderHome() {
   const log = document.getElementById('update-log');
+  if (!POSTS_INDEX.length) { log.innerHTML = '<div class="log-row"><span class="log-text" style="color:var(--tx3)">記事はまだありません。</span></div>'; return; }
   log.innerHTML = POSTS_INDEX.slice(0, 5).map(a =>
     `<div class="log-row"><span class="log-date">${a.date}</span><span class="log-text">考察「${a.title.substring(0,30)}…」公開</span></div>`
   ).join('');
@@ -474,6 +489,10 @@ function setArtFilter(f) {
 function renderArticles() {
   const filtered = artFilter==='全て' ? POSTS_INDEX : POSTS_INDEX.filter(a => a.cat === artFilter);
   document.getElementById('art-count').textContent = filtered.length + ' 件';
+  if (!filtered.length) {
+    document.getElementById('art-list').innerHTML = '<div class="loading" style="grid-column:1/-1;color:var(--tx3)">記事はまだありません。</div>';
+    return;
+  }
   document.getElementById('art-list').innerHTML = filtered.map(a => `
     <div class="art-card" onclick="openArticle('${a.id}')">
       <div class="art-card-in">
@@ -542,11 +561,11 @@ function toggleChap(id) { openChapId = openChapId === id ? null : id; renderScen
 
 function initOps() {
   document.getElementById('op-sl').textContent = `OPERATOR DATABASE — ${OPS.length}名収録`;
-  const classes = ['全て', ...Array.from(new Set(OPS.map(o=>o.cls))).sort()];
+  const classes = ['全て', ...Array.from(new Set(OPS.filter(o=>o.cls).map(o=>o.cls))).sort()];
   document.getElementById('op-class-tabs').innerHTML = classes.map(c =>
     `<button class="ftb${c===opClsFilter?' on':''}" onclick="setOpCls('${c}')">${CI[c]||''} ${c}</button>`
   ).join('');
-  document.getElementById('op-rar-tabs').innerHTML = [0,6,5,4,3].map(r =>
+  document.getElementById('op-rar-tabs').innerHTML = [0,6,5,4,3,2,1].map(r =>
     `<button class="ftb${r===opRarFilter?' on':''}" onclick="setOpRar(${r})">${r===0?'全レア':'★'+r}</button>`
   ).join('');
   renderOps();
@@ -570,7 +589,7 @@ function setOpRar(r) {
 function renderOps() {
   const q = (document.getElementById('op-srch').value||'').trim().toLowerCase();
   const filtered = OPS.filter(op => {
-    const mq = !q || op.name.toLowerCase().includes(q) || op.en.toLowerCase().includes(q) || op.nation.includes(q);
+    const mq = !q || (op.name||'').toLowerCase().includes(q) || (op.en||'').toLowerCase().includes(q) || (op.nation||'').includes(q);
     const mc = opClsFilter==='全て' || op.cls===opClsFilter;
     const mr = opRarFilter===0 || op.rarity===opRarFilter;
     return mq && mc && mr;
@@ -582,9 +601,16 @@ function renderOps() {
       <div class="op-ico">${CI[op.cls]||'❓'}</div>
       <div class="op-name">${op.name}</div>
       ${op.rarity?`<div class="stars ${starsCls(op.rarity)}">${'★'.repeat(op.rarity)}</div>`:''}
-      <div class="op-sub">${op.cls}</div>
+      <div class="op-sub">${op.cls||'─'}</div>
       ${op.infected?'<div class="inf-b">感染者</div>':''}
     </div>`).join('');
+}
+
+function selectLoreTab(sec) {
+  currentLoreTab = sec;
+  document.querySelectorAll('.m-lore-tab').forEach(b => b.classList.toggle('on', b.dataset.sec === sec));
+  const text = currentLoreSections[sec] || '（データなし）';
+  document.getElementById('m-lore-text').textContent = text;
 }
 
 function openModal(name) {
@@ -592,21 +618,41 @@ function openModal(name) {
   if (!op) return;
   document.getElementById('m-ico').textContent = CI[op.cls]||'❓';
   document.getElementById('m-name').textContent = op.name;
-  document.getElementById('m-en').textContent = op.en;
+  document.getElementById('m-en').textContent = op.en||'';
   const sc = op.rarity>=6?'s6':op.rarity===5?'s5':op.rarity===4?'s4':'s3';
   document.getElementById('m-badges').innerHTML =
     (op.rarity?`<span class="stars ${sc}">${'★'.repeat(op.rarity)}</span>`:'')+
-    `<span class="tag tb">${op.cls}</span><span class="tag tf">${op.sub}</span>`+
+    (op.cls?`<span class="tag tb">${op.cls}</span>`:'')+
     (op.infected?'<span class="tag tr">感染者</span>':'');
+
+  // プロフィールテーブル
   document.getElementById('m-tbl').innerHTML = `
-    <tr><td>出身</td><td>${op.nation||'不明'}</td></tr>
+    <tr><td>所属</td><td>${op.nation||'不明'}</td></tr>
     <tr><td>性別</td><td>${op.gender||'不明'}</td></tr>
-    <tr><td>CV</td><td>${op.cv||'─'}</td></tr>
-    <tr><td>クラス</td><td>${op.cls} / ${op.sub}</td></tr>
-    <tr><td>レアリティ</td><td>${'★'.repeat(op.rarity||0)}</td></tr>`;
-  document.getElementById('m-lore').textContent = op.lore||'設定データ未入力';
+    <tr><td>クラス</td><td>${op.cls||'─'}</td></tr>
+    <tr><td>レアリティ</td><td>${op.rarity?'★'.repeat(op.rarity):'─'}</td></tr>`;
+
+  // loreセクション
+  const lore = op.lore || {};
+  currentLoreSections = lore;
+  const keys = Object.keys(lore);
+  // 順序付きソート
+  const sorted = [...SECTION_ORDER.filter(s => keys.includes(s)), ...keys.filter(s => !SECTION_ORDER.includes(s))];
+
+  const loreSec = document.getElementById('m-lore-sec');
+  if (!sorted.length) {
+    loreSec.innerHTML = '<div class="m-sl">CHARACTER LORE</div><div class="m-lore-text">設定データ未入力</div>';
+  } else {
+    document.getElementById('m-lore-tabs').innerHTML = sorted.map(s =>
+      `<button class="m-lore-tab" data-sec="${s}" onclick="selectLoreTab('${s}')">${s}</button>`
+    ).join('');
+    document.getElementById('m-lore-text').textContent = '';
+    selectLoreTab(sorted[0]);
+  }
+
   document.getElementById('modal').classList.add('on');
 }
+
 function closeModal(e) {
   if (!e || e.target===document.getElementById('modal') || e.currentTarget?.classList.contains('m-close'))
     document.getElementById('modal').classList.remove('on');
